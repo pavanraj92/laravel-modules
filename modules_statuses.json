@@ -1,0 +1,12 @@
+{
+    "User": true,
+    "Admin": true,
+    "Page": true,
+    "Email": true,
+    "Faq": true,
+    "Setting": true,
+    "Banner": true,
+    "Category": true,
+    "AdminManager": true,
+    "UserRole": true
+}

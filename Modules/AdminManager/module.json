@@ -1,0 +1,11 @@
+{
+    "name": "AdminManager",
+    "alias": "adminmanager",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AdminManager\\Providers\\AdminManagerServiceProvider"
+    ],
+    "files": []
+}
