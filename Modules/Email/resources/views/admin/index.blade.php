@@ -92,7 +92,9 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ $email->created_at->format('Y-m-d H:i:s') }}
+                                                    {{ $email->created_at
+                                                        ? $email->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                                        : '—' }}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.emails.edit', $email) }}"

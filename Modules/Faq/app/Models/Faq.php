@@ -4,6 +4,7 @@ namespace Modules\Faq\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\Config;
 
 class Faq extends Model
 {
@@ -35,5 +36,12 @@ class Faq extends Model
         }
 
         return $query;
+    }
+
+    public static function getPerPageLimit(): int
+    {
+        return Config::has('get.admin_page_limit')
+            ? Config::get('get.admin_page_limit')
+            : 10;
     }
 }

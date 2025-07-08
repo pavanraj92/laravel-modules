@@ -110,7 +110,7 @@
         </header>
 
         <aside class="left-sidebar d-flex flex-column" data-sidebarbg="skin5">
-            <div class="scroll-sidebar flex-grow-1"  style="overflow-y: auto;">
+            <div class="scroll-sidebar flex-grow-1" style="overflow-y: auto;">
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         <li class="sidebar-item">
@@ -123,66 +123,102 @@
 
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.pages.index') }}" aria-expanded="false">
-                                <i class="mdi mdi-arrange-bring-forward"></i>
-                                <span class="hide-menu">CMS Pages</span>
+                                href="{{ route('admin.admins.index') }}" aria-expanded="false">
+                                <i class="fas fa-users"></i>
+                                <span class="hide-menu">Admin Manager</span>
+                            </a>
+                        </li>
+
+                        @php
+                            $sidebarRoles = \DB::table('user_roles')
+                            ->where('status', 1)
+                            ->orderBy('name')
+                            ->get();
+                        @endphp
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="fas fa-folder-open"></i>
+                                <span class="hide-menu">Manage Users</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                @foreach ($sidebarRoles as $role)
+                                    <li class="sidebar-item">
+                                        <a href="{{ route('admin.users.index', ['type' => $role->slug]) }}" class="sidebar-link">
+                                            <i class="fas fa-circle"></i>
+                                            <span class="hide-menu">{{ $role->name }} Manager</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                                href="{{ route('admin.user_roles.index') }}" aria-expanded="false">
+                                <i class="fas fa-user-tag"></i>
+                                <span class="hide-menu">User Role Manager</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.emails.index') }}" aria-expanded="false">
-                                <i class="mdi mdi-email-outline"></i>
-                                <span class="hide-menu">Email Templates</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.faqs.index') }}" aria-expanded="false">
-                                <i class="fas fa-question-circle"></i>
-                                <span class="hide-menu">Faq Manager</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.settings.index') }}" aria-expanded="false">
-                                <i class="fas fa-cog"></i>
-                                <span class="hide-menu">General setting Manager</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.banners.index') }}" aria-expanded="false">
-                                <i class="fas fa-image"></i>
-                                <span class="hide-menu">Banner Manager</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.category.index') }}" aria-expanded="false">
+                                href="{{ route('admin.categories.index') }}" aria-expanded="false">
                                 <i class="fas fa-th-large"></i>
                                 <span class="hide-menu">Category Manager</span>
                             </a>
                         </li>
 
                         <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.admins.index') }}" aria-expanded="false">
-                                <i class="fas fa-user-cog"></i>
-                                <span class="hide-menu">Admin Manager</span>
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="fas fa-folder-open"></i>
+                                <span class="hide-menu">Manage Content</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">                                  
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.pages.index') }}" class="sidebar-link">
+                                        <i class="fas fa-circle"></i>
+                                        <span class="hide-menu">CMS Pages Manager</span>
+                                    </a>
+                                </li>
+                
+                                    <a href="{{ route('admin.emails.index') }}" class="sidebar-link">
+                                        <i class="fas fa-circle"></i>
+                                        <span class="hide-menu">Email Template Manager</span>
+                                    </a>
+                                </li>
+
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.faqs.index') }}" class="sidebar-link">
+                                        <i class="fas fa-circle"></i>
+                                        <span class="hide-menu">Faq Manager</span>
+                                    </a>
+                                </li>
+                            
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.banners.index') }}" class="sidebar-link">
+                                        <i class="fas fa-circle"></i>
+                                        <span class="hide-menu">Banner Manager</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>                      
+
+                        <li class="sidebar-item {{ Route::is('admin.settings.*') ? 'selected' : '' }}">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.settings.*') ? 'active' : '' }}"
+                                href="{{ route('admin.settings.index') }}" aria-expanded="false">
+                                <i class="fas fa-cog"></i>
+                                <span class="hide-menu">Setting Manager</span>
                             </a>
                         </li>
+
                     </ul>
                 </nav>
             </div>
-            <div class="sidebar-bottom-link p-3">
+            <div class="sidebar-bottom-link p-3 mt-auto" style="position: sticky; bottom: 0; background: #222d32;">
                 <a class="sidebar-link d-flex align-items-center" href="{{ route('admin.packages') }}">
                     <i class="fas fa-box mr-2"></i>
-                    <span class="hide-menu">Package Setting</span>
+                    <span class="hide-menu">Package Manager</span>
                 </a>
             </div>
         </aside>

@@ -5,7 +5,7 @@ namespace Modules\Email\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
-// use Modules\Email\Database\Factories\EmailFactory;
+use Illuminate\Support\Facades\Config;
 
 class Email extends Model
 {
@@ -28,21 +28,16 @@ class Email extends Model
 
         static::creating(function ($email) {
             if (empty($email->slug)) {
-                $email->slug = Str::slug($email->title);
+                $email->slug = Str::slug($email->title, '_');
             }
         });
 
         static::updating(function ($email) {
             if ($email->isDirty('title')) {
-                $email->slug = Str::slug($email->title);
+                $email->slug = Str::slug($email->title, '_');
             }
         });
     }
-
-    // protected static function newFactory(): EmailFactory
-    // {
-    //     // return EmailFactory::new();
-    // }
 
     public function scopeFilter($query, $title)
     {
@@ -61,5 +56,12 @@ class Email extends Model
         }
 
         return $query;
+    }
+    
+    public static function getPerPageLimit(): int
+    {
+        return Config::has('get.admin_page_limit')
+            ? Config::get('get.admin_page_limit')
+            : 10;
     }
 }

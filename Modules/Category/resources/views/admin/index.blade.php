@@ -16,7 +16,7 @@
             <div class="col-12">
                 <div class="card card-body">
                     <h4 class="card-title">Filter</h4>
-                    <form action="{{ route('admin.category.index') }}" method="GET" id="filterForm">
+                    <form action="{{ route('admin.categories.index') }}" method="GET" id="filterForm">
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -38,7 +38,7 @@
                         </div>
                         <div class="text-right">
                             <button type="submit" form="filterForm" class="btn btn-primary mb-3">Filter</button>
-                            <a href="{{ route('admin.category.index') }}" class="btn btn-secondary mb-3">Reset</a>
+                            <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary mb-3">Reset</a>
                         </div>
                     </form>
                 </div>
@@ -49,7 +49,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="text-right">
-                            <a href="{{ route('admin.category.create') }}" class="btn btn-primary mb-3">Create New Category</a>
+                            <a href="{{ route('admin.categories.create') }}" class="btn btn-primary mb-3">Create New Category</a>
                         </div>
                     
                         <div class="table-responsive">
@@ -58,6 +58,7 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Title</th>
+                                        <th scope="col">Parent Category</th>
                                         <th scope="col">Slug</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Created At</th>
@@ -73,34 +74,43 @@
                                             <tr>
                                                 <th scope="row">{{ $i }}</th>
                                                 <td>{{ $category->title }}</td>
+                                                <td>
+                                                    @if($category->parent)
+                                                        {{ $category->parent->title }}
+                                                    @else
+                                                        —
+                                                    @endif
+                                                </td>
                                                 <td>{{ $category->slug }}</td>
                                                 <td>
                                                     <!-- create update status functionality-->
                                                     @if ($category->status == '1')
                                                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
                                                             title="Click to change status to inactive"
-                                                            data-url="{{ route('admin.category.updateStatus') }}"
+                                                            data-url="{{ route('admin.categories.updateStatus') }}"
                                                             data-method="POST" data-status="0" data-id="{{ $category->id }}"
                                                             class="btn btn-success btn-sm update-status">Active</a>
                                                     @else
                                                         <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
                                                             title="Click to change status to active"
-                                                            data-url="{{ route('admin.category.updateStatus') }}"
+                                                            data-url="{{ route('admin.categories.updateStatus') }}"
                                                             data-method="POST" data-status="1"
                                                             data-id="{{ $category->id }}"
                                                             class="btn btn-warning btn-sm update-status">InActive</a>
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ $category->created_at->format('Y-m-d H:i:s') }}
+                                                    {{ $category->created_at
+                                                        ? $category->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                                        : '—' }}
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('admin.category.edit', $category) }}"
+                                                    <a href="{{ route('admin.categories.edit', $category) }}"
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="Edit this record"
                                                         class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
-                                                    <a href="{{ route('admin.category.show', $category) }}" 
+                                                    <a href="{{ route('admin.categories.show', $category) }}" 
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="View this record"
@@ -109,7 +119,7 @@
                                                         data-toggle="tooltip" 
                                                         data-placement="top"
                                                         title="Delete this record" 
-                                                        data-url="{{ route('admin.category.destroy', $category) }}"
+                                                        data-url="{{ route('admin.categories.destroy', $category) }}"
                                                         data-text="Are you sure you want to delete this record?"                                                    
                                                         data-method="DELETE"
                                                         class="btn btn-danger btn-sm delete-record" ><i class="mdi mdi-delete"></i></a>

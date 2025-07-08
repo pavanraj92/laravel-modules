@@ -90,7 +90,9 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ $faq->created_at->format('Y-m-d H:i:s') }}
+                                                    {{ $faq->created_at
+                                                        ? $faq->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                                        : '—' }}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.faqs.edit', $faq) }}"
