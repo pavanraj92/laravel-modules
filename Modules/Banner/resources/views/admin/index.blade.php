@@ -67,7 +67,9 @@
                                                 <td>{{ $banner->sub_title }}</td>
                                                 <td>{{ $banner->button_title }}</td>
                                                 <td>
-                                                    {{ $banner->created_at->format('Y-m-d H:i:s') }}
+                                                    {{ $banner->created_at
+                                                        ? $banner->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                                        : '—' }}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.banners.edit', $banner) }}"

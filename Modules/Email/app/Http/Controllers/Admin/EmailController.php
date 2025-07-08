@@ -17,7 +17,7 @@ class EmailController extends Controller
                 filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->latest()
-                ->paginate(5)
+                ->paginate(Email::getPerPageLimit())
                 ->withQueryString();
 
             return view('email::admin.index', compact('emails'));

@@ -12,7 +12,8 @@ class CategoryCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [                   
+        return [           
+            'parent_category_id' => 'nullable|numeric',        
             'title' => 'required|string|min:3|max:255|unique:categories,title',
             'sort_order' => 'nullable|numeric|max:255',
             'image' => 'required|image',

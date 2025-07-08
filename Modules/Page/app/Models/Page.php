@@ -5,11 +5,11 @@ namespace Modules\Page\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Str;
-// use Modules\Page\Database\Factories\PageFactory;
+use Illuminate\Support\Facades\Config;
 
 class Page extends Model
 {
-    use HasFactory, HasSlug;    
+    use HasFactory;    
 
     /**
      * The attributes that are mass assignable.
@@ -30,13 +30,13 @@ class Page extends Model
 
         static::creating(function ($page) {
             if (empty($page->slug)) {
-                $page->slug = Str::slug($page->title);
+                $page->slug = Str::slug($page->title, '_');
             }
         });
 
         static::updating(function ($page) {
             if ($page->isDirty('title')) {
-                $page->slug = Str::slug($page->title);
+                $page->slug = Str::slug($page->title, '_');
             }
         });
     }
@@ -62,8 +62,10 @@ class Page extends Model
         return $query;
     }
 
-    // protected static function newFactory(): PageFactory
-    // {
-    //     // return PageFactory::new();
-    // }
+    public static function getPerPageLimit(): int
+    {
+        return Config::has('get.admin_page_limit')
+            ? Config::get('get.admin_page_limit')
+            : 10;
+    }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\AdminManager\Http\Controllers\AdminManagerController;
+use Modules\AdminManager\Http\Controllers\Admin\AdminManagerController;
 
 
 Route::prefix('admin')->name('admin.')->group(function () {  

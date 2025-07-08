@@ -1,12 +1,12 @@
 @extends('admin::admin.layouts.master')
 
-@section('title', 'Pages Management')
+@section('title', 'CMS Pages Management')
 
-@section('page-title', 'Page Details')
+@section('page-title', 'CMS Page Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage Pages</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Page Details</li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage CMS Pages</a></li>
+    <li class="breadcrumb-item active" aria-current="page">CMS Page Details</li>
 @endsection
 
 @section('content')
@@ -34,7 +34,9 @@
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Created At</th>
-                                        <td scope="col">{{ $page->created_at ?? 'N/A' }}</td>                                   
+                                        <td scope="col">{{ $page->created_at
+                                            ? $page->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                            : '—' }}</td>                                   
                                     </tr>                                
                                 </tbody>
                             </table>   

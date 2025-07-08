@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Config;
 
 class User extends Model
 {
@@ -14,6 +15,7 @@ class User extends Model
     use HasFactory, Notifiable, SoftDeletes;
 
     protected $fillable = [
+        'role_id',
         'first_name',
         'last_name',
         'email',
@@ -53,6 +55,13 @@ class User extends Model
         $first = trim($this->first_name ?? '');
         $last = trim($this->last_name ?? '');
         return trim("{$first} {$last}");
+    }
+
+    public static function getPerPageLimit(): int
+    {
+        return Config::has('get.admin_page_limit')
+            ? Config::get('get.admin_page_limit')
+            : 10;
     }
 }
 

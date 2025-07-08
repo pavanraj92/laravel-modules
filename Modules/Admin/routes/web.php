@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Admin\Http\Controllers\AdminController;
+use Modules\Admin\Http\Controllers\Admin\AdminController;
 use Modules\Admin\Http\Controllers\Auth\LoginController;
 use Modules\Admin\Http\Controllers\Auth\ForgotPasswordController;
 use Modules\Admin\Http\Controllers\Auth\ResetPasswordController;

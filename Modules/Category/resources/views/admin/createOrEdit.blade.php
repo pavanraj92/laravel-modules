@@ -5,7 +5,7 @@
 @section('page-title', 'Create Category')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.category.index') }}">Manage Categories</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.categories.index') }}">Manage Categories</a></li>
     <li class="breadcrumb-item active" aria-current="page">Create Category</li>
 @endsection
 
@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="card card-body">
-                    <form action="{{ isset($category) ? route('admin.category.update', $category->id) : route('admin.category.store') }}"
+                    <form action="{{ isset($category) ? route('admin.categories.update', $category->id) : route('admin.categories.store') }}"
                         method="POST" id="categoryForm"  enctype="multipart/form-data">
                         @if (isset($category))
                             @method('PUT')
@@ -32,6 +32,27 @@
                                     @enderror
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Parent Category</label>
+                                    <select name="parent_category_id" class="form-control select2">
+                                        <option value="0">None (Main Category)</option>
+                                        @if(isset($mainCategories))
+                                            @foreach($mainCategories as $mainCategory)
+                                                <option value="{{ $mainCategory->id }}" 
+                                                    @if(($category->parent_category_id ?? old('parent_category_id')) == $mainCategory->id) selected @endif>
+                                                    {{ $mainCategory->title }}
+                                                </option>
+                                            @endforeach
+                                        @endif
+                                    </select>
+                                    @error('parent_category_id')
+                                        <div class="text-danger validation-error">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>Sort Order<span class="text-danger">*</span></label>
@@ -42,20 +63,20 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
-                                        <option value="0" {{ (($category?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                         <option value="1" {{ (($category?->status ?? old('status')) == '1') ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ (($category?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger validation-error">{{ $message }}</div>
                                     @enderror
                                 </div>
                             </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>Image<span class="text-danger">*</span></label>
@@ -74,7 +95,7 @@
                         </div>
                         <div class="form-group">
                             <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
-                            <a href="{{ route('admin.category.index') }}" class="btn btn-secondary">Back</a>
+                            <a href="{{ route('admin.categories.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </form>
                 </div>
