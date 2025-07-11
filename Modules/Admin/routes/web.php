@@ -25,7 +25,7 @@ Route::prefix('admin')->name('admin.')->namespace('Auth')->group(function () {
     Route::post('/reset-password', [ResetPasswordController::class, 'postResetPassword'])->name('password.update');
 
 
-    Route::middleware('auth:admin')->group(function () {
+    Route::middleware('admin.auth')->group(function () {
         Route::get('dashboard', function () {           
             return view('admin::admin.dashboard');
         })->name('dashboard');
