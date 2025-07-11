@@ -13,17 +13,31 @@ class SeedUserRolesSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('user_roles')->updateOrInsert(
-            ['slug' => 'customer'],
+        $roles = [
             [
                 'name' => 'Customer',
                 'slug' => 'customer',
                 'status' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]
-        );
-
+            ],
+            [
+                'name' => 'Seller',
+                'slug' => 'seller',
+                'status' => 1,
+            ],
+        ];
+    
+        foreach ($roles as $role) {
+            DB::table('user_roles')->updateOrInsert(
+                ['slug' => $role['slug']],
+                [
+                    'name' => $role['name'],
+                    'slug' => $role['slug'],
+                    'status' => $role['status'],
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]
+            );
+        }
         $this->command->info('Customer role seeded successfully.');
     }
 }

@@ -1,6 +1,9 @@
 @extends('admin::admin.layouts.master')
 
 @section('title', 'Admin Profile')
+@section('meta_description')
+View and update your admin profile information.
+@endsection
 
 @section('page-title', 'Profile')
 
@@ -18,32 +21,32 @@
                             @csrf
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label for="first_name">First Name</label>
-                                    <input type="text" name="first_name" id="first_name" placeholder="First Name" class="form-control form-control-line alphabets-only" value={{$admin->first_name ?? ''}}>
+                                    <label for="first_name">First Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="first_name" id="first_name" placeholder="First Name" class="form-control form-control-line alphabets-only" value="{{$admin->first_name ?? ''}}">
                                     @error('first_name')
                                     <div class="text-danger validation-error">{{ $message }}</div>
-                                @enderror
+                                    @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="last_name">Last Name</label>
-                                    <input type="text" name="last_name" id="last_name" placeholder="Last Name" class="form-control form-control-line alphabets-only" value={{$admin->last_name ?? ''}}>
+                                    <label for="last_name">Last Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="last_name" id="last_name" placeholder="Last Name" class="form-control form-control-line alphabets-only" value="{{$admin->last_name ?? ''}}">
                                     @error('last_name')
                                     <div class="text-danger validation-error">{{ $message }}</div>
-                                @enderror
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-6">
-                                    <label for="example-email">Email</label>
-                                    <input type="email" placeholder="Email" class="form-control form-control-line" name="email" id="email" value={{$admin->email ?? ''}}>
+                                    <label for="example-email">Email<span class="text-danger">*</span></label>
+                                    <input type="email" placeholder="Email" class="form-control form-control-line" name="email" id="email" value="{{$admin->email ?? ''}}">
                                     @error('email')
                                     <div class="text-danger validation-error">{{ $message }}</div>
                                 @enderror
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="website_name">Website Name</label>
-                                    <input type="text" name="website_name" id="website_name" placeholder="Website Name" class="form-control form-control-line" value={{$admin->website_name ?? ''}}>
+                                    <label for="website_name">Website Name<span class="text-danger">*</span></label>
+                                    <input type="text" name="website_name" id="website_name" placeholder="Website Name" class="form-control form-control-line" value="{{$admin->website_name ?? ''}}">
                                     @error('website_name')
                                     <div class="text-danger validation-error">{{ $message }}</div>
                                 @enderror

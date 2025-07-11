@@ -121,8 +121,8 @@
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                        <li class="sidebar-item {{ Route::is('admin.admins.*') ? 'selected' : '' }}">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.admins.*') ? 'active' : '' }}"
                                 href="{{ route('admin.admins.index') }}" aria-expanded="false">
                                 <i class="fas fa-users"></i>
                                 <span class="hide-menu">Admin Manager</span>
@@ -136,73 +136,69 @@
                             ->get();
                         @endphp
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
-                                <i class="fas fa-folder-open"></i>
+                        <li class="sidebar-item {{ Route::is('admin.users.*') ? 'selected' : '' }}">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark {{ Route::is('admin.users.*') ? 'active' : '' }}" href="javascript:void(0)">
+                                <i class="fas fa-users"></i>
                                 <span class="hide-menu">Manage Users</span>
                             </a>
-                            <ul aria-expanded="false" class="collapse first-level">
+                            <ul aria-expanded="{{ Route::is('admin.users.*') ? 'true' : 'false' }}" class="collapse first-level {{ Route::is('admin.users.*') ? 'in' : '' }}">
                                 @foreach ($sidebarRoles as $role)
-                                    <li class="sidebar-item">
-                                        <a href="{{ route('admin.users.index', ['type' => $role->slug]) }}" class="sidebar-link">
-                                            <i class="fas fa-circle"></i>
-                                            <span class="hide-menu">{{ $role->name }} Manager</span>
-                                        </a>
-                                    </li>
+                                <li class="sidebar-item {{ request('type') === $role->slug ? 'selected' : '' }}">
+                                    <a href="{{ route('admin.users.index', ['type' => $role->slug]) }}" class="sidebar-link {{ request('type') === $role->slug ? 'active' : '' }}">
+                                        <i class="fas fa-circle"></i>
+                                        <span class="hide-menu">{{ $role->name }} Manager</span>
+                                    </a>
+                                </li>
                                 @endforeach
                             </ul>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
-                                href="{{ route('admin.user_roles.index') }}" aria-expanded="false">
-                                <i class="fas fa-user-tag"></i>
-                                <span class="hide-menu">User Role Manager</span>
-                            </a>
-                        </li>
-
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link"
+                        <li class="sidebar-item {{ Route::is('admin.categories.*') ? 'selected' : '' }}">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.categories.*') ? 'active' : '' }}"
                                 href="{{ route('admin.categories.index') }}" aria-expanded="false">
                                 <i class="fas fa-th-large"></i>
                                 <span class="hide-menu">Category Manager</span>
                             </a>
                         </li>
 
-                        <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        @php
+                        $activeRoutes = ['admin.pages.*', 'admin.emails.*', 'admin.banners.*', 'admin.faqs.*'];
+                        @endphp
+                        <li class="sidebar-item {{ Route::is($activeRoutes) ? 'selected' : '' }}">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark {{ Route::is($activeRoutes) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                 <i class="fas fa-folder-open"></i>
                                 <span class="hide-menu">Manage Content</span>
                             </a>
-                            <ul aria-expanded="false" class="collapse first-level">                                  
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.pages.index') }}" class="sidebar-link">
+                            <ul aria-expanded="false" class="collapse first-level {{ Route::is($activeRoutes) ? 'in' : '' }}">
+                                <li class="sidebar-item" {{ Route::is('admin.pages.*') ? 'selected' : '' }}>
+                                    <a href="{{ route('admin.pages.index') }}" class="sidebar-link {{ Route::is('admin.pages.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">CMS Pages Manager</span>
                                     </a>
                                 </li>
-                
-                                    <a href="{{ route('admin.emails.index') }}" class="sidebar-link">
+                                <li class="sidebar-item {{ Route::is('admin.emails.*') ? 'selected' : '' }}">
+                                    <a href="{{ route('admin.emails.index') }}" class="sidebar-link {{ Route::is('admin.emails.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">Email Template Manager</span>
                                     </a>
                                 </li>
 
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.faqs.index') }}" class="sidebar-link">
+
+                                <li class="sidebar-item {{ Route::is('admin.faqs.*') ? 'selected' : '' }}">
+                                    <a href="{{ route('admin.faqs.index') }}" class="sidebar-link {{ Route::is('admin.faqs.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">Faq Manager</span>
                                     </a>
                                 </li>
-                            
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.banners.index') }}" class="sidebar-link">
+
+                                <li class="sidebar-item {{ Route::is('admin.banners.*') ? 'selected' : '' }}">
+                                    <a href="{{ route('admin.banners.index') }}" class="sidebar-link {{ Route::is('admin.banners.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">Banner Manager</span>
                                     </a>
                                 </li>
                             </ul>
-                        </li>                      
+                        </li>           
 
                         <li class="sidebar-item {{ Route::is('admin.settings.*') ? 'selected' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.settings.*') ? 'active' : '' }}"

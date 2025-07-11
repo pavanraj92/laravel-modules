@@ -15,7 +15,7 @@ use admin\admin_auth\Requests\ResetPasswordRequest;
 
 class ResetPasswordController extends Controller
 {
-    public function resetPassword($token)
+    public function resetPassword(Request $request, $token)
     {
         $checkTokenExpired = DB::table('admin_password_resets')
                                     ->where('token','=', $token)
@@ -26,18 +26,25 @@ class ResetPasswordController extends Controller
             Session::flash('linked-expired', 'Reset password link is expired.'); 
         } 
 
-        return view('admin::admin.auth.reset-password', ['token' => $token]);
+        return view('admin::admin.auth.reset-password', ['token' => $token, 'email' => $request->query('email')]);
 
     }
 
-    public function postResetPassword(ResetPasswordRequest $request)
+    public function postResetPassword(Request $request)
     {
 
         $request->validate([
             'token' => 'required',
             'email' => 'required|email',
-            //'password' => 'required|min:6|confirmed',
-            'password' => [ 'required', 'min:6', 'confirmed'],
+            'password' => [
+                'required',
+                'min:8',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).+$/'
+            ],
+            'password_confirmation' => [
+                'required',
+                'same:password'
+            ],
         ]);
 
         //$userID = base64_decode($request->token);
