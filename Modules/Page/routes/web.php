@@ -11,9 +11,7 @@ use Modules\Page\Http\Controllers\Admin\PageManagerController;
 
 
 
-Route::prefix('admin')->name('admin.')->group(function () {  
-    Route::middleware('auth:admin')->group(function () {
-        Route::resource('pages', PageManagerController::class);
-        Route::post('pages/updateStatus', [PageManagerController::class, 'updateStatus'])->name('pages.updateStatus');
-    });
+Route::prefix('admin')->name('admin.')->middleware(['web','admin.auth'])->group(function () {  
+    Route::resource('pages', PageManagerController::class);
+    Route::post('pages/updateStatus', [PageManagerController::class, 'updateStatus'])->name('pages.updateStatus');
 });
