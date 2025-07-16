@@ -9,10 +9,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+use Modules\AdminRolePermission\App\Models\Role;
+use Modules\AdminRolePermission\App\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -92,4 +94,18 @@ class Admin extends Authenticatable
             : 10;
     }
 
+    public function role()
+    {
+        return $this->belongsTo(AdminRole::class, 'role_id');
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(
+            Role::class,
+            'role_admin',      // pivot table name
+            'admin_id',        // foreign key on pivot table for this model
+            'role_id'          // foreign key on pivot table for Role model
+        );
+    }
 }

@@ -24,6 +24,9 @@
 </head>
 
 <body>
+    @php
+    $admin = auth('admin')->user();
+    @endphp
     <div class="preloader">
         <div class="lds-ripple">
             <div class="lds-pos"></div>
@@ -111,8 +114,10 @@
 
         <aside class="left-sidebar d-flex flex-column" data-sidebarbg="skin5">
             <div class="scroll-sidebar flex-grow-1" style="overflow-y: auto;">
+
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
+                        @if($admin->hasPermission('dashboard'))
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="{{ route('admin.dashboard') }}" aria-expanded="false">
@@ -207,7 +212,7 @@
                                 <span class="hide-menu">Setting Manager</span>
                             </a>
                         </li>
-
+                        @endif
                     </ul>
                 </nav>
             </div>
