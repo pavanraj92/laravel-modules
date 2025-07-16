@@ -1,0 +1,30 @@
+{
+    "name": "nwidart/adminrolepermission",
+    "description": "",
+    "authors": [
+        {
+            "name": "Nicolas Widart",
+            "email": "n.widart@gmail.com"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [],
+            "aliases": {
+
+            }
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Modules\\AdminRolePermission\\": "app/",
+            "Modules\\AdminRolePermission\\Database\\Factories\\": "database/factories/",
+            "Modules\\AdminRolePermission\\Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Modules\\AdminRolePermission\\Tests\\": "tests/"
+        }
+    }
+}

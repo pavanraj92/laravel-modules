@@ -1,0 +1,11 @@
+{
+    "name": "AdminRolePermission",
+    "alias": "adminrolepermission",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\AdminRolePermission\\Providers\\AdminRolePermissionServiceProvider"
+    ],
+    "files": []
+}
