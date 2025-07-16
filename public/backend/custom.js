@@ -54,7 +54,7 @@ $(document).ready(function() {
         var text = $(this).data('text') || "You won't be able to revert this!"; // Default text if not specified
 
         Swal.fire({
-            // title: "Are you sure?",
+            title: 'Are you sure?',
             text: text,
             icon: "warning",
             showCancelButton: true,

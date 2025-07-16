@@ -8,5 +8,6 @@
     "Banner": true,
     "Category": true,
     "AdminManager": true,
-    "UserRole": true
+    "UserRole": true,
+    "AdminRolePermission": true
 }
