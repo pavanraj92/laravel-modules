@@ -10,6 +10,15 @@ use Modules\Email\App\Models\Email;
 
 class EmailController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admincan_permission:emails_manager_list')->only(['index']);
+        $this->middleware('admincan_permission:emails_manager_create')->only(['create', 'store']);
+        $this->middleware('admincan_permission:emails_manager_edit')->only(['edit', 'update']);
+        $this->middleware('admincan_permission:emails_manager_view')->only(['show']);
+        $this->middleware('admincan_permission:emails_manager_delete')->only(['destroy']);
+    }
+    
     public function index(Request $request)
     {
         try {

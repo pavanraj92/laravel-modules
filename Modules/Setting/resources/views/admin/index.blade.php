@@ -38,10 +38,12 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @admincan('settings_manager_create')
                         <div class="text-right">
                             <a href="{{ route('admin.settings.create') }}" class="btn btn-primary mb-3">Create New Setting</a>
                         </div>
-                    
+                        @endadmincan
+
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class="thead-light">
@@ -69,16 +71,21 @@
                                                         : '—' }}
                                                 </td>
                                                 <td>
+                                                    @admincan('settings_manager_edit')
                                                     <a href="{{ route('admin.settings.edit', $setting) }}"
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="Edit this record"
                                                         class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                                    @endadmincan
+
+                                                    @admincan('settings_manager_view')
                                                     <a href="{{ route('admin.settings.show', $setting) }}" 
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
+                                                    @endadmincan
                                                 </td>
                                             </tr>
                                             @php

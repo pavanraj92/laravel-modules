@@ -12,6 +12,8 @@ class AdminRolePermissionDatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
+            AdminPermissionSeeder::class,
+            AdminRoleSeeder::class,
             AssignAdminRoleSeeder::class,
         ]);
     }
