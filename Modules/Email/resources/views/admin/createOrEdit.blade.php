@@ -2,11 +2,11 @@
 
 @section('title', 'Emails Management')
 
-@section('page-title', 'Create Email')
+@section('page-title', isset($email) ? 'Edit Email' : 'Create Email')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.emails.index') }}">Manage Emails</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create Email</li>
+    <li class="breadcrumb-item active" aria-current="page">{{isset($email) ? 'Edit Email' : 'Create Email'}}</li>
 @endsection
 
 @section('content')
@@ -48,8 +48,8 @@
                                 <div class="form-group">
                                     <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
-                                        <option value="0" {{ (($page?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                         <option value="1" {{ (($page?->status ?? old('status')) == '1') ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ (($page?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger validation-error">{{ $message }}</div>

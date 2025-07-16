@@ -94,8 +94,6 @@
                                     My Profile</a>
                                 <a class="dropdown-item" href="{{ route('admin.change-password') }}"><i class="fas fa-lock m-r-5 m-l-5"></i></i>
                                     Change Password</a>
-                                <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i>
-                                    Inbox</a>
                                 <!--Logout admin -->
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ route('admin.logout') }}"

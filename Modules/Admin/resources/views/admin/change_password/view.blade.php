@@ -7,21 +7,7 @@
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page">Change Password</li>
 @endsection
-@push('styles')
-<style>
-    .password-toggle {
-        position: relative;
-    }
-    .toggle-password {
-        position: absolute;
-        top: 38px;
-        right: 15px;
-        cursor: pointer;
-        color: #6c757d;
-        z-index: 10;
-    }
-</style>
-@endpush
+
 @section('content')   
     <div class="container-fluid">
         <div class="row">

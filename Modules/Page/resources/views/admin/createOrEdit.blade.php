@@ -2,11 +2,11 @@
 
 @section('title', 'CMS Pages Management')
 
-@section('page-title', 'Create CMS Page')
+@section('page-title', isset($page) ? 'Edit CMS Page' : 'Create CMS Page')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage CMS Pages</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create CMS Page</li>
+    <li class="breadcrumb-item active" aria-current="page">{{isset($page) ? 'Edit CMS Page' : 'Create CMS Page'}}</li>
 @endsection
 
 @section('content')

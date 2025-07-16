@@ -2,11 +2,11 @@
 
 @section('title', 'Faqs Management')
 
-@section('page-title', 'Create Faq')
+@section('page-title', isset($faq) ? 'Edit Faq' : 'Create Faq')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.faqs.index') }}">Manage Faqs</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create Faq</li>
+    <li class="breadcrumb-item active" aria-current="page">{{isset($faq) ? 'Edit Faq' : 'Create Faq'}}</li>
 @endsection
 
 @section('content')
@@ -36,8 +36,8 @@
                                 <div class="form-group">
                                     <label>Status</label>
                                     <select name="status" class="form-control select2" required>
-                                        <option value="0" {{ (($page?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                         <option value="1" {{ (($page?->status ?? old('status')) == '1') ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ (($page?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger validation-error">{{ $message }}</div>
