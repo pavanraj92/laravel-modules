@@ -17,6 +17,11 @@ class CategoryManagerController extends Controller
     public function __construct(ImageService $imageService)
     {
         $this->imageService = $imageService;
+        $this->middleware('admincan_permission:categories_manager_list')->only(['index']);
+        $this->middleware('admincan_permission:categories_manager_create')->only(['create', 'store']);
+        $this->middleware('admincan_permission:categories_manager_edit')->only(['edit', 'update']);
+        $this->middleware('admincan_permission:categories_manager_view')->only(['show']);
+        $this->middleware('admincan_permission:categories_manager_delete')->only(['destroy']);
     }
     /**
      * Display a listing of the resource.

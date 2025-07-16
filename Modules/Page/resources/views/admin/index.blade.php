@@ -53,9 +53,11 @@
                 <div class="card">
                     <div class="card-body">
                         {{-- <h4 class="card-title">Manage Pages</h4> --}}
+                        @admincan('pages_manager_create')
                         <div class="text-right">
                             <a href="{{ route('admin.pages.create') }}" class="btn btn-primary mb-3">Create New Page</a>
                         </div>
+                        @endadmincan
 
                         <div class="table-responsive">
                             <table class="table">
@@ -101,18 +103,24 @@
                                                         : '—' }}
                                                 </td>
                                                 <td>
+                                                    @admincan('pages_manager_edit')
                                                     <a href="{{ route('admin.pages.edit', $page) }}" data-toggle="tooltip"
                                                         data-placement="top" title="Edit this record"
                                                         class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                                    @endadmincan
+                                                    @admincan('pages_manager_view')
                                                     <a href="{{ route('admin.pages.show', $page) }}" data-toggle="tooltip"
                                                         data-placement="top" title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
+                                                    @endadmincan
+                                                    @admincan('pages_manager_delete')
                                                     <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
                                                         title="Delete this record"
                                                         data-url="{{ route('admin.pages.destroy', $page) }}"
                                                         data-text="Are you sure you want to delete this record?"
                                                         data-method="DELETE" class="btn btn-danger btn-sm delete-record"><i
                                                             class="mdi mdi-delete"></i></a>
+                                                    @endadmincan
                                                 </td>
                                             </tr>
                                             @php

@@ -5,13 +5,22 @@ namespace Modules\AdminRolePermission\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Modules\Admin\Models\Admin;
 use Modules\AdminRolePermission\App\Http\Requests\Permission\StorePermissionRequest;
 use Modules\AdminRolePermission\App\Http\Requests\Permission\UpdatePermissionRequest;
 use Modules\AdminRolePermission\App\Models\Permission;
 
 class AdminPermissionController extends Controller
 {
-    protected int $perPage = 5;
+    public function __construct()
+    {
+        $this->middleware('admincan_permission:permission_manager_list')->only(['index']);
+        $this->middleware('admincan_permission:permission_manager_create')->only(['create', 'store']);
+        $this->middleware('admincan_permission:permission_manager_edit')->only(['edit', 'update']);
+        $this->middleware('admincan_permission:permission_manager_view')->only(['show']);
+        $this->middleware('admincan_permission:permission_manager_delete')->only(['destroy']);
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -20,9 +29,8 @@ class AdminPermissionController extends Controller
         try {
             $search = $request->query('keyword');
             $permissions = Permission::filter($search)
-                // ->whereStatus(config('constants.status.active'))
                 ->latest()
-                ->paginate($this->perPage)
+                ->paginate(Admin::getPerPageLimit())
                 ->withQueryString();
             return view('adminrolepermission::admin.permission.index', compact('permissions'));
         } catch (\Throwable $e) {

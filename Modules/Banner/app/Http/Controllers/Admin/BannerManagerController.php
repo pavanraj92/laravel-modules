@@ -16,6 +16,11 @@ class BannerManagerController extends Controller
     public function __construct(ImageService $imageService)
     {
         $this->imageService = $imageService;
+        $this->middleware('admincan_permission:banners_manager_list')->only(['index']);
+        $this->middleware('admincan_permission:banners_manager_create')->only(['create', 'store']);
+        $this->middleware('admincan_permission:banners_manager_edit')->only(['edit', 'update']);
+        $this->middleware('admincan_permission:banners_manager_view')->only(['show']);
+        $this->middleware('admincan_permission:banners_manager_delete')->only(['destroy']);
     }
     /**
      * Display a listing of the resource.

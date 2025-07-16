@@ -3,8 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Modules\AdminRolePermission\Http\Controllers\AdminRoleController;
 use Modules\AdminRolePermission\Http\Controllers\AdminPermissionController;
-
-Route::prefix('admin')->name('admin.')->middleware(['auth:admin', 'admin.permission:role_list'])->group(function () {
+// , 'admin.permission:role_list'
+Route::prefix('admin')->name('admin.')->middleware(['web','admin.auth'])->group(function () {
     Route::resource('roles', AdminRoleController::class);
     
     Route::resource('permissions', AdminPermissionController::class);

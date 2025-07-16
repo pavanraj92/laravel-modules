@@ -13,7 +13,8 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'admin.auth' => \App\Http\Middleware\RedirectIfAdminUnauthenticated::class,
-            'admin.permission' => \Modules\AdminRolePermission\Http\Middleware\CheckAdminPermission::class
+            'admin.permission' => \Modules\AdminRolePermission\Http\Middleware\CheckAdminPermission::class,
+            'admincan_permission' => \App\Http\Middleware\AdminCanPermission::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

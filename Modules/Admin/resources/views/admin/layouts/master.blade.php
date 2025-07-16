@@ -115,7 +115,7 @@
 
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                        @if($admin->hasPermission('dashboard'))
+                        @admincan('dashboard')
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link"
                                 href="{{ route('admin.dashboard') }}" aria-expanded="false">
@@ -123,7 +123,9 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
+                        @endadmincan
 
+                        @admincan('admin_manager_list')
                         <li class="sidebar-item {{ Route::is('admin.admins.*') ? 'selected' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.admins.*') ? 'active' : '' }}"
                                 href="{{ route('admin.admins.index') }}" aria-expanded="false">
@@ -131,12 +133,43 @@
                                 <span class="hide-menu">Admin Manager</span>
                             </a>
                         </li>
+                        @endadmincan
 
+                        @admincan('roles_manager_list|permission_manager_list')
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="mdi mdi-account-key"></i>
+                                <span class="hide-menu">Role Permission Manager</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                @admincan('roles_manager_list')
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.roles.index') }}" class="sidebar-link">
+                                        <i class="mdi mdi-account-key"></i>
+                                        <span class="hide-menu">Role Manager</span>
+                                    </a>
+                                </li>
+                                @endadmincan
+
+                                @admincan('permission_manager_list')
+                                <li class="sidebar-item">
+                                    <a href="{{ route('admin.permissions.index') }}" class="sidebar-link">
+                                        <i class="mdi mdi-key"></i>
+                                        <span class="hide-menu">Permission Manager</span>
+                                    </a>
+                                </li>
+                                @endadmincan
+
+                            </ul>
+                        </li>
+                        @endadmincan
+
+                        @admincan('users_manager_list')
                         @php
-                            $sidebarRoles = \DB::table('user_roles')
-                            ->where('status', 1)
-                            ->orderBy('name')
-                            ->get();
+                        $sidebarRoles = \DB::table('user_roles')
+                        ->where('status', 1)
+                        ->orderBy('name')
+                        ->get();
                         @endphp
 
                         <li class="sidebar-item {{ Route::is('admin.users.*') ? 'selected' : '' }}">
@@ -155,7 +188,9 @@
                                 @endforeach
                             </ul>
                         </li>
+                        @endadmincan
 
+                        @admincan('categories_manager_list')
                         <li class="sidebar-item {{ Route::is('admin.categories.*') ? 'selected' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.categories.*') ? 'active' : '' }}"
                                 href="{{ route('admin.categories.index') }}" aria-expanded="false">
@@ -163,7 +198,10 @@
                                 <span class="hide-menu">Category Manager</span>
                             </a>
                         </li>
+                        @endadmincan
 
+
+                        @admincan('pages_manager_list|emails_manager_list|faqs_manager_list|banners_manager_list')
                         @php
                         $activeRoutes = ['admin.pages.*', 'admin.emails.*', 'admin.banners.*', 'admin.faqs.*'];
                         @endphp
@@ -173,36 +211,46 @@
                                 <span class="hide-menu">Manage Content</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ Route::is($activeRoutes) ? 'in' : '' }}">
+                                @admincan('pages_manager_list')
                                 <li class="sidebar-item" {{ Route::is('admin.pages.*') ? 'selected' : '' }}>
                                     <a href="{{ route('admin.pages.index') }}" class="sidebar-link {{ Route::is('admin.pages.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">CMS Pages Manager</span>
                                     </a>
                                 </li>
+                                @endadmincan
+
+                                @admincan('emails_manager_list')
                                 <li class="sidebar-item {{ Route::is('admin.emails.*') ? 'selected' : '' }}">
                                     <a href="{{ route('admin.emails.index') }}" class="sidebar-link {{ Route::is('admin.emails.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">Email Template Manager</span>
                                     </a>
                                 </li>
+                                @endadmincan
 
-
+                                @admincan('faqs_manager_list')
                                 <li class="sidebar-item {{ Route::is('admin.faqs.*') ? 'selected' : '' }}">
                                     <a href="{{ route('admin.faqs.index') }}" class="sidebar-link {{ Route::is('admin.faqs.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">Faq Manager</span>
                                     </a>
                                 </li>
+                                @endadmincan
 
+                                @admincan('banners_manager_list')
                                 <li class="sidebar-item {{ Route::is('admin.banners.*') ? 'selected' : '' }}">
                                     <a href="{{ route('admin.banners.index') }}" class="sidebar-link {{ Route::is('admin.banners.*') ? 'active' : '' }}">
                                         <i class="fas fa-circle"></i>
                                         <span class="hide-menu">Banner Manager</span>
                                     </a>
                                 </li>
+                                @endadmincan
                             </ul>
-                        </li>           
+                        </li>
+                        @endadmincan
 
+                        @admincan('settings_manager_list')
                         <li class="sidebar-item {{ Route::is('admin.settings.*') ? 'selected' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.settings.*') ? 'active' : '' }}"
                                 href="{{ route('admin.settings.index') }}" aria-expanded="false">
@@ -210,16 +258,18 @@
                                 <span class="hide-menu">Setting Manager</span>
                             </a>
                         </li>
-                        @endif
+                        @endadmincan
                     </ul>
                 </nav>
             </div>
+            @admincan('package_manager_list')
             <div class="sidebar-bottom-link p-3 mt-auto" style="position: sticky; bottom: 0; background: #222d32;">
                 <a class="sidebar-link d-flex align-items-center" href="{{ route('admin.packages') }}">
                     <i class="fas fa-box mr-2"></i>
                     <span class="hide-menu">Package Manager</span>
                 </a>
             </div>
+            @endadmincan
         </aside>
         <div class="page-wrapper">
             <!-- Bread crumb and right sidebar toggle -->
@@ -279,26 +329,26 @@
     <script src="{{ asset('backend/dist/js/pages/dashboards/dashboard1.js') }}"></script>
     <!-- Toastr JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-     <!-- sweetalert JS -->
+    <!-- sweetalert JS -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--custom script -->
     <script src="{{ asset('backend/custom.js') }}"></script>
 
     <script>
         @if(session('success'))
-            toastr.success("{{ session('success') }}");
+        toastr.success("{{ session('success') }}");
         @endif
 
         @if(session('error'))
-            toastr.error("{{ session('error') }}");
+        toastr.error("{{ session('error') }}");
         @endif
 
         @if(session('info'))
-            toastr.info("{{ session('info') }}");
+        toastr.info("{{ session('info') }}");
         @endif
 
         @if(session('warning'))
-            toastr.warning("{{ session('warning') }}");
+        toastr.warning("{{ session('warning') }}");
         @endif
     </script>
 

@@ -14,6 +14,15 @@ use Modules\User\App\Mail\WelcomeMail;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('admincan_permission:users_manager_list')->only(['index']);
+        $this->middleware('admincan_permission:users_manager_create')->only(['create', 'store']);
+        $this->middleware('admincan_permission:users_manager_edit')->only(['edit', 'update']);
+        $this->middleware('admincan_permission:users_manager_view')->only(['show']);
+        $this->middleware('admincan_permission:users_manager_delete')->only(['destroy']);
+    }
+    
     /**
      * Display a listing of the resource.
      */
