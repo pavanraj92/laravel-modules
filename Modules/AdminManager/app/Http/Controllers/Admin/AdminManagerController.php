@@ -10,6 +10,7 @@ use Modules\Admin\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\AdminManager\App\Mail\WelcomeAdminMail;
+use Modules\AdminRolePermission\App\Models\Role;
 
 class AdminManagerController extends Controller
 {
@@ -19,7 +20,7 @@ class AdminManagerController extends Controller
         $this->middleware('admincan_permission:admin_manager_create')->only(['create', 'store']);
         $this->middleware('admincan_permission:admin_manager_edit')->only(['edit', 'update']);
         $this->middleware('admincan_permission:admin_manager_view')->only(['show']);
-        $this->middleware('admincan_permission:admin_manager_delete')->only(['destroy']);        
+        $this->middleware('admincan_permission:admin_manager_delete')->only(['destroy']);
     }
 
     /**
@@ -28,8 +29,7 @@ class AdminManagerController extends Controller
     public function index(Request $request)
     {
         try {
-            $admins = Admin::
-                where('id', '!=', 1)
+            $admins = Admin::where('id', '!=', 1)
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->latest()
@@ -45,9 +45,10 @@ class AdminManagerController extends Controller
     public function create()
     {
         try {
-            return view('adminmanager::admin.createOrEdit');
+            $roles = Role::whereStatus('1')->get();
+            return view('adminmanager::admin.createOrEdit', compact('roles'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load admins: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to load roles: ' . $e->getMessage());
         }
     }
 
@@ -58,10 +59,19 @@ class AdminManagerController extends Controller
 
             $plainPassword = \Str::random(8);
             $requestData['password'] = Hash::make($plainPassword);
-    
+
+            // Remove roles from requestData to prevent mass assignment error
+            $roles = $requestData['role_ids'] ?? [];
+            unset($requestData['role_ids']);
+
             // Create admin
             $admin = Admin::create($requestData);
-    
+
+            // Attach roles to pivot table (admin_role)
+            if (!empty($roles)) {
+                $admin->roles()->attach($roles); // assuming `roles()` is a belongsToMany relation
+            }
+
             // Send welcome mail
             Mail::to($admin->email)->send(new WelcomeAdminMail($admin, $plainPassword));
             return redirect()->route('admin.admins.index')->with('success', 'Admin created successfully.');
@@ -85,7 +95,9 @@ class AdminManagerController extends Controller
     public function edit(Admin $admin)
     {
         try {
-            return view('adminmanager::admin.createOrEdit', compact('admin'));
+            $roles = Role::whereStatus('1')->get();
+            $assignedRoleIds = $admin->roles()->pluck('roles.id')->toArray();
+            return view('adminmanager::admin.createOrEdit', compact('admin', 'roles', 'assignedRoleIds'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admin for editing: ' . $e->getMessage());
         }
@@ -95,8 +107,13 @@ class AdminManagerController extends Controller
     {
         try {
             $requestData = $request->validated();
+            $roleIds = $requestData['role_ids'] ?? [];
+            unset($requestData['role_ids']);
 
             $admin->update($requestData);
+
+            // Sync roles in pivot table (admin_role)
+            $admin->roles()->sync($roleIds);
             return redirect()->route('admin.admins.index')->with('success', 'Admin updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admin for editing: ' . $e->getMessage());
@@ -136,7 +153,7 @@ class AdminManagerController extends Controller
                 . ' data-id="' . $admin->id . '"'
                 . ' class="btn ' . $btnClass . ' btn-sm update-status">' . $label . '</a>';
 
-            return response()->json(['success' => true, 'message' => 'Status updated to '.$label, 'strHtml' => $strHtml]);
+            return response()->json(['success' => true, 'message' => 'Status updated to ' . $label, 'strHtml' => $strHtml]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to delete record.', 'error' => $e->getMessage()], 500);
         }

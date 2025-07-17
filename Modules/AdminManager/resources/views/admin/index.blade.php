@@ -59,7 +59,8 @@
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Eamil</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Admin Role</th>
                                         <th scope="col">Status</th>
                                         <th scope="col">Created At</th>
                                         <th scope="col">Action</th>
@@ -75,6 +76,13 @@
                                                 <th scope="row">{{ $i }}</th>
                                                 <td>{{ $admin->full_name ?? '' }}</td>
                                                 <td>{{ $admin->email ?? '' }}</td>
+                                                <td>
+                                                    @if($admin->roles && $admin->roles->count())
+                                                         {{ $admin->roles->pluck('name')->map(fn($name) => ucfirst($name))->join(', ') }}
+                                                    @else
+                                                        —
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     <!-- create update status functionality-->
                                                     @if ($admin->status == '1')

@@ -23,7 +23,7 @@ class AdminRoleController extends Controller
         $this->middleware('admincan_permission:assign_permission')->only(['editPermissionsAssign', 'updatePermissionsAssign']);
         $this->middleware('admincan_permission:assign_roles')->only(['editAssignAdminsRoles', 'updateAssignAdminsRoles']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -161,16 +161,17 @@ class AdminRoleController extends Controller
     {
         if ($request->ajax()) {
             $search = $request->query('term');
-            $admins = Admin::select('id', 'name')
-                ->when($search, fn($q) => $q->where('name', 'like', "%{$search}%"))
+            $admins = Admin::select('id', 'first_name', 'last_name')
+                ->when($search, fn($q) => $q->where('first_name', 'like', "%{$search}%")
+                    ->orWhere('last_name', 'like', "%{$search}%"))
                 ->get();
 
             return response()->json(
-                $admins->map(fn($admin) => ['id' => $admin->id, 'text' => $admin->name])
+                $admins->map(fn($admin) => ['id' => $admin->id, 'text' => $admin->first_name . ' ' . $admin->last_name])
             );
         }
 
-        $admins = Admin::select('id', 'name')->get();
+        $admins = Admin::select('id', 'first_name', 'last_name')->get();
         $assignedAdminIds = $role->admins()->pluck('admins.id')->toArray();
 
         return view('adminrolepermission::admin.role.assign-admins', compact('role', 'admins', 'assignedAdminIds'));

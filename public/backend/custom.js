@@ -111,6 +111,7 @@ $(document).ready(function () {
 //dynamic global modal implementation
 $(document).on('click', '.open-dynamic-modal', function () {
     const config = $(this).data('config') || {};
+    console.log(config);
 
     $('#globalModalTitle').text(config.title || 'Modal Title');
     $('#globalDynamicForm').attr('action', config.action_url || '#');
