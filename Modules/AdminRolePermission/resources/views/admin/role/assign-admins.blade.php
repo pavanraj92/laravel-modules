@@ -54,7 +54,7 @@
 <script>
     $(document).ready(function() {
         $('#admins').select2({
-            placeholder: "Select admins",
+            placeholder: "Select Admins",
             allowClear: true,
             width: '100%'
         });

@@ -27,6 +27,16 @@
                                     <tr>
                                         <th scope="row">Email</th>
                                         <td scope="col">{{ $admin->email ?? 'N/A' }}</td>
+                                    </tr> 
+                                     <tr>
+                                        <th scope="row">Admin Role</th>
+                                        <td scope="col">
+                                            @if($admin->roles && $admin->roles->count())
+                                                    {{ $admin->roles->pluck('name')->map(fn($name) => ucfirst($name))->join(', ') }}
+                                            @else
+                                                —
+                                            @endif
+                                        </td>
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Mobile</th>

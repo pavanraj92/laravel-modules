@@ -12,7 +12,7 @@ class AdminCreateRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [                   
+        return [
             'email' => [
                 'required',
                 'email',
@@ -24,6 +24,8 @@ class AdminCreateRequest extends FormRequest
             'last_name' => 'nullable|string|min:3|max:255',
             'mobile' => 'required|digits_between:7,15|numeric',
             'status' => 'required|in:0,1',
+            'role_ids'   => 'required|array',
+            'role_ids.*' => 'exists:roles,id',
         ];
     }
 
