@@ -88,6 +88,11 @@ return [
                 ['name' => 'Settings Manager Edit', 'slug' => 'settings_manager_edit'],
                 ['name' => 'Settings Manager Delete', 'slug' => 'settings_manager_delete'],
             ],
+
+            'Seo Manager' => [
+                ['name' => 'Seo Manager List', 'slug' => 'seo_manager_list']
+           
+            ],
         ],
     ],
 ];
