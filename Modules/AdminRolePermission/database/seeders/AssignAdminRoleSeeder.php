@@ -14,12 +14,22 @@ class AssignAdminRoleSeeder extends Seeder
         $admin = Admin::first();
 
         if (!$admin) {
-            $this->command->warn('No admin found. Please seed the admin table first.');
-            return;
+            //create a super admin if none exists according to Modules\Admin\Models\Admin
+            $admin = Admin::create([
+                // 'name' => 'Super Admin',
+                'first_name' => 'Super',
+                'last_name' => 'Admin',
+                'email' => 'admin@yopmail.com',
+                'mobile' => '1234567890',
+                'website_name' => 'Super Admin Website',
+                'website_slug' => 'super-admin-website',
+                'password' => bcrypt('Dots@123'),
+                'status' => 1,
+            ]);
         }
 
         // Get or create a role
-        $role = Role::firstOrCreate(['name' => 'Super Admin', 'status' => config('constants.status.active')]);
+        $role = Role::firstOrCreate(['name' => 'Super Admin', 'status' => 1]);
 
         // Attach role to admin (pivot table: role_admin)
         $admin->roles()->syncWithoutDetaching([$role->id]);
