@@ -2,7 +2,9 @@
 
 namespace Modules\AdminRolePermission\Database\Seeders;
 
+use AssignRolePermissionSeeder;
 use Illuminate\Database\Seeder;
+use Modules\AdminRolePermission\Database\Seeders\AssignRolePermissionSeeder as SeedersAssignRolePermissionSeeder;
 
 class AdminRolePermissionDatabaseSeeder extends Seeder
 {
@@ -14,7 +16,7 @@ class AdminRolePermissionDatabaseSeeder extends Seeder
         $this->call([
             AdminPermissionSeeder::class,
             AdminRoleSeeder::class,
-            AssignRolePermissionSeeder::class,
+            SeedersAssignRolePermissionSeeder::class,
             AssignAdminRoleSeeder::class,
         ]);
     }

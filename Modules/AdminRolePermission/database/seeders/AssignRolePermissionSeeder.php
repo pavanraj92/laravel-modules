@@ -1,5 +1,7 @@
 <?php
 
+namespace Modules\AdminRolePermission\Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Modules\AdminRolePermission\App\Models\Role;
 use Modules\AdminRolePermission\App\Models\Permission;
