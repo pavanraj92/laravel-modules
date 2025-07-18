@@ -9,15 +9,25 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+use Kyslik\ColumnSortable\Sortable;
 
 class Setting extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
+        'title',
+        'slug',
+        'config_value',
+    ];
+
+    /**
+     * The attributes that should be sortable.
+     */
+    public $sortable = [
         'title',
         'slug',
         'config_value',

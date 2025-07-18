@@ -63,10 +63,10 @@
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Created At</th>
+                                        <th scope="col">S. No.</th>
+                                        <th>@sortablelink('title', 'Title')</th>
+                                        <th>@sortablelink('status', 'Status')</th>
+                                        <th>@sortablelink('created_at', 'Created At')</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>

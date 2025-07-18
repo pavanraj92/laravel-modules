@@ -22,7 +22,17 @@
                                 <div class="form-group">
                                     <label for="title">Keyword</label>
                                     <input type="text" name="keyword" id="keyword" class="form-control"
-                                        value="{{ app('request')->query('keyword') }}" placeholder="Enter title or sub title">                                   
+                                        value="{{ app('request')->query('keyword') }}" placeholder="Enter title, sub title">                                   
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="status">Status</label>
+                                    <select name="status" id="status" class="form-control select2">
+                                        <option value="">All</option>
+                                        <option value="0" {{ app('request')->query('status') == '0' ? 'selected' : '' }}>Inactive</option>
+                                        <option value="1" {{ app('request')->query('status') == '1' ? 'selected' : '' }}>Active</option>
+                                    </select>                                   
                                 </div>
                             </div>
                         </div>
@@ -49,11 +59,12 @@
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Sub Title</th>
-                                        <th scope="col">Button Title</th>
-                                        <th scope="col">Created At</th>
+                                        <th scope="col">S. No.</th>
+                                        <th scope="col">@sortablelink('title', 'Title')</th>
+                                        <th scope="col">@sortablelink('sub_title', 'Sub Title')</th>
+                                        <th scope="col">@sortablelink('button_title', 'Button Title')</th>
+                                        <th scope="col">@sortablelink('status', 'Status')</th>
+                                        <th scope="col">@sortablelink('created_at', 'Created At')</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -67,7 +78,24 @@
                                                 <th scope="row">{{ $i }}</th>
                                                 <td>{{ $banner->title }}</td>
                                                 <td>{{ $banner->sub_title }}</td>
-                                                <td>{{ $banner->button_title }}</td>
+                                                <td>{{ $banner->button_title }}</td>                                                
+                                                <td>
+                                                    @if ($banner->status == '1')
+                                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
+                                                            title="Click to change status to inactive"
+                                                            data-url="{{ route('admin.banners.updateStatus') }}"
+                                                            data-method="POST" data-status="0" data-id="{{ $banner->id }}"
+                                                            class="btn btn-success btn-sm update-status">Active</a>
+                                                    @else
+                                                        <a href="javascript:void(0)" data-toggle="tooltip" data-placement="top"
+                                                            title="Click to change status to active"
+                                                            data-url="{{ route('admin.banners.updateStatus') }}"
+                                                            data-method="POST" data-status="1"
+                                                            data-id="{{ $banner->id }}"
+                                                            class="btn btn-warning btn-sm update-status">InActive</a>
+                                                    @endif
+                                                </td>
+
                                                 <td>
                                                     {{ $banner->created_at
                                                         ? $banner->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
@@ -106,7 +134,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center">No banners found.</td>
+                                            <td colspan="7" class="text-center">No banners found.</td>
                                         </tr>
                                     @endif
                                 </tbody>

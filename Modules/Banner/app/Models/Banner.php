@@ -5,10 +5,10 @@ namespace Modules\Banner\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Config;
-
+use Kyslik\ColumnSortable\Sortable;
 class Banner extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +21,17 @@ class Banner extends Model
         'button_url',
         'sort_order',
         'image',
+        'status',
+    ];
+
+    /**
+     * The attributes that should be sortable.
+     */
+    public $sortable = [
+        'title',
+        'sub_title',
+        'sort_order',
+        'status',
     ];
 
     public function scopeFilter($query, $keyword)
@@ -30,6 +41,14 @@ class Banner extends Model
                 $q->where('title', 'like', '%' . $keyword . '%')
                   ->orWhere('sub_title', 'like', '%' . $keyword . '%');
             });
+        }
+        return $query;
+    }
+
+    public function scopeFilterByStatus($query, $status)
+    {
+        if (!is_null($status) && $status !== '') {
+            return $query->where('status', $status);
         }
         return $query;
     }

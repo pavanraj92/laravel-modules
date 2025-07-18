@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-6">                                
                                 <div class="form-group">
-                                    <label>Title</label>
+                                    <label>Title<span class="text-danger">*</span></label>
                                     <input type="text" name="title" class="form-control alphabets-only"
                                         value="{{ $page?->title ?? old('title') }}" required>
                                     @error('title')
@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-6">
                                  <div class="form-group">
-                                    <label>Status</label>
+                                    <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
                                         <option value="draft" {{ (($page?->status ?? old('status')) == 'draft') ? 'selected' : '' }}>Draft</option>
                                         <option value="published" {{ (($page?->status ?? old('status')) == 'published') ? 'selected' : '' }}>Published</option>
@@ -45,11 +45,9 @@
                                 </div>
                             </div>
                         </div>
-
-
-
+                        
                         <div class="form-group">
-                            <label>Content</label>
+                            <label>Content<span class="text-danger">*</span></label>
                             <textarea name="content" id="content" class="form-control content-editor">{{ $page?->content ?? old('content') }}</textarea>
                             @error('content')
                                 <div class="text-danger validation-error">{{ $message }}</div>

@@ -18,6 +18,7 @@ class BannerUpdateRequest extends FormRequest
             'button_url' => 'nullable|string|max:255',
             'sort_order' => 'nullable|numeric|max:255',
             'description' => 'required|string|min:3|max:65535',
+            'status' => 'required|boolean',
         ];
 
         // Make image required if not exist
