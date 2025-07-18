@@ -18,26 +18,29 @@
             <div class="card">
                 <div class="table-responsive">
                     <div class="card-body">
-                        <table class="table table-bordered table-responsive-lg">
+                        <table class="table table-bordered">
                             <tbody>
                                 <tr>
-                                    <th scope="row">Name</th>
-                                    <td scope="col">{{ $role->name ?? 'N/A' }}</td>
+                                    <th style="width: 200px;">Name</th>
+                                    <td>{{ ucwords($role->name) ?? 'N/A' }}</td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Created At</th>
-                                    <td scope="col">{{ $role->created_at ?? 'N/A' }}</td>
+                                    <th>Created At</th>
+                                    <td>{{ $role->created_at ?? 'N/A' }}</td>
                                 </tr>
-
                                 <tr>
-                                    <th scope="row">Assigned Permissions</th>
-                                    <td scope="col">
+                                    <th>Assigned Permissions</th>
+                                    <td>
                                         @if($role->permissions && $role->permissions->count())
-                                        <ul class="mb-0 pl-3">
+                                        <div class="row">
                                             @foreach($role->permissions as $permission)
-                                            <li>{{ ucfirst(str_replace('_', ' ', $permission->name)) }}</li>
+                                            <div class="col-md-3 mb-2">
+                                                <span class="badge bg-secondary text-white p-2">
+                                                    {{ ucfirst(str_replace('_', ' ', $permission->name)) }}
+                                                </span>
+                                            </div>
                                             @endforeach
-                                        </ul>
+                                        </div>
                                         @else
                                         <span class="text-muted">No permissions assigned</span>
                                         @endif
@@ -45,6 +48,7 @@
                                 </tr>
                             </tbody>
                         </table>
+
 
                         <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary">Back</a>
                     </div>

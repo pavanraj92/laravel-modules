@@ -20,7 +20,7 @@
 <!-- Container fluid  -->
 <div class="container-fluid">
     <!-- Start Assign Permission Content -->
-    <h4>Assign Admins to Role: <strong>{{ $role->name }}</strong></h4>
+    <h4>Assign Admins to Role: <strong>{{ ucwords($role->name) }}</strong></h4>
 
     @if(session('success'))
     <div class="alert alert-success">{{ session('success') }}</div>
