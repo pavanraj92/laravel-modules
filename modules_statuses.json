@@ -9,5 +9,6 @@
     "Category": true,
     "AdminManager": true,
     "UserRole": true,
-    "AdminRolePermission": true
+    "AdminRolePermission": true,
+    "Seo": true
 }

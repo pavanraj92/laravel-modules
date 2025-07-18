@@ -239,6 +239,15 @@
                         </li>
                         @endadmincan
 
+                        @admincan('seo_manager_list')
+                        <li class="sidebar-item {{ Route::is('admin.seo.*') ? 'selected' : '' }}">
+                            <a href="{{ route('admin.seo.index') }}" class="sidebar-link waves-effect waves-dark {{ Route::is('admin.seo.*') ? 'active' : '' }}">
+                                <i class="fas fa-search"></i>
+                                <span class="hide-menu">Seo Manager</span>
+                            </a>
+                        </li>
+                        @endadmincan
+
                         @admincan('settings_manager_list')
                         <li class="sidebar-item {{ Route::is('admin.settings.*') ? 'selected' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ Route::is('admin.settings.*') ? 'active' : '' }}"
