@@ -14,6 +14,7 @@ class AdminRolePermissionDatabaseSeeder extends Seeder
         $this->call([
             AdminPermissionSeeder::class,
             AdminRoleSeeder::class,
+            AssignRolePermissionSeeder::class,
             AssignAdminRoleSeeder::class,
         ]);
     }
