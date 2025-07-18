@@ -18,7 +18,7 @@
             <div class="card">
                 <div class="table-responsive">
                     <div class="card-body">
-                        <table class="table table-bordered">
+                        <table class="table table-striped">
                             <tbody>
                                 <tr>
                                     <th style="width: 200px;">Name</th>

@@ -8,11 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Config;
+use Kyslik\ColumnSortable\Sortable;
 
 class User extends Model
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, SoftDeletes;
+    use HasFactory, Notifiable, SoftDeletes, Sortable;
 
     protected $fillable = [
         'role_id',
@@ -21,6 +22,13 @@ class User extends Model
         'email',
         'mobile',
         'status'
+    ];
+
+    protected $sortable = [
+        // 'name',
+        'email',
+        'status',
+        'created_at',
     ];
 
     // protected static function newFactory(): EmailFactory

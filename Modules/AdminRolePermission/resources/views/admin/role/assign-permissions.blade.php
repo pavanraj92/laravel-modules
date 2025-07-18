@@ -18,20 +18,29 @@
                 <div class="card-body">
                     <form action="{{ route('admin.roles.assign.permissions.update', $role) }}" method="POST">
                         @csrf
-                        <h4 class="p-3" style="background-color: #dee2e633;">
-                            Assign Permissions to: <strong>{{ ucfirst($role->name )}}</strong>
-                        </h4>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6 class="mb-0">Assign Permissions to: {{ $role->name }}</h6>
+                            <button type="button" id="toggleAllPermissionsBtn" class="btn btn-sm btn-primary">
+                                Select All Permissions
+                            </button>
+                        </div>
 
                         @php
                         $permissionGroups = config('permissions.admin.permissions');
                         @endphp
 
+
                         @foreach($permissionGroups as $group => $groupPermissions)
-                        <div class="form-group p-3 mb-4" style="background-color: #f8f9fa;">
-                            <div class="d-flex ml-3">
-                                <input type="checkbox" class="form-check-input me-2 group-checkbox" id="group_{{ Str::slug($group) }}" data-group="{{ $group }}">
-                                <label for="group_{{ Str::slug($group) }}"><b>{{ $group }}</b></label>
+                        <div class="form-group p-3 mb-4 border rounded" style="background-color: #f8f9fa;">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h6 class="mb-0 text-uppercase fw-bold"><b>{{ $group }}</b></h6>
+                                @if (strtolower($group) !== 'dashboard')
+                                <button type="button" class="btn btn-sm btn-success toggle-group-permissions" data-group="{{ $group }}">
+                                    Check All
+                                </button>
+                                @endif
                             </div>
+
 
                             @php $chunks = array_chunk($groupPermissions, 2); @endphp
 
@@ -88,69 +97,90 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const updateGroupCheckbox = (group) => {
-            const allPermissions = document.querySelectorAll(`.permission-checkbox[data-group="${group}"]`);
-            const groupCheckbox = document.querySelector(`.group-checkbox[data-group="${group}"]`);
 
-            // Ignore disabled checkboxes (e.g., dashboard)
-            const activePermissions = Array.from(allPermissions).filter(cb => !cb.disabled);
-            const allChecked = activePermissions.every(cb => cb.checked);
+        function updateGroupButton(group) {
+            const checkboxes = Array.from(document.querySelectorAll(`.permission-checkbox[data-group='${CSS.escape(group)}']`)).filter(cb => !cb.disabled);
 
-            groupCheckbox.checked = allChecked;
-        };
+            const allChecked = checkboxes.length > 0 && checkboxes.every(cb => cb.checked);
+            const groupButton = document.querySelector(`.toggle-group-permissions[data-group="${group}"]`);
 
-        const permissionCheckboxes = document.querySelectorAll('.permission-checkbox');
-        const groupCheckboxes = document.querySelectorAll('.group-checkbox');
+            if (groupButton) {
+                groupButton.textContent = allChecked ? 'Uncheck All' : 'Check All';
+            }
+        }
 
-        // Handle individual permission changes
-        permissionCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', function() {
+        function updateGlobalButtonLabel() {
+            const allCheckboxes = Array.from(document.querySelectorAll('.permission-checkbox')).filter(cb => !cb.disabled);
+            const allChecked = allCheckboxes.length > 0 && allCheckboxes.every(cb => cb.checked);
+            const globalBtn = document.getElementById('toggleAllPermissionsBtn');
+
+
+            if (globalBtn) {
+                globalBtn.textContent = allChecked ? 'Uncheck All Permissions' : 'Select All Permissions';
+            }
+        }
+
+        // Group-wise toggle button click
+        document.querySelectorAll('.toggle-group-permissions').forEach(button => {
+            button.addEventListener('click', function() {
                 const group = this.dataset.group;
-                const slug = this.dataset.slug;
+                const checkboxes = Array.from(document.querySelectorAll(`.permission-checkbox[data-group='${CSS.escape(group)}']`)).filter(cb => !cb.disabled);
 
-                // Auto-check 'list' when any is selected
-                if (slug !== 'list' && this.checked) {
-                    const listCheckbox = document.querySelector(`.permission-checkbox[data-group="${group}"][data-slug$="list"]`);
-                    if (listCheckbox && !listCheckbox.checked) {
-                        listCheckbox.checked = true;
-                    }
+                const allChecked = checkboxes.every(cb => cb.checked);
+
+                // Toggle all
+                checkboxes.forEach(cb => cb.checked = !allChecked);
+
+                // Always keep 'list' checked if it's in the group and we are checking all
+                if (!allChecked) {
+                    const listCB = document.querySelector(`.permission-checkbox[data-group="${group}"][data-slug$="list"]`);
+                    if (listCB) listCB.checked = true;
                 }
 
-                // Auto-uncheck all if 'list' is unchecked
-                if (slug === 'list' && !this.checked) {
-                    document.querySelectorAll(`.permission-checkbox[data-group="${group}"]`).forEach(cb => {
-                        if (!cb.disabled) cb.checked = false;
-                    });
-                }
-
-                updateGroupCheckbox(group);
-            });
-
-            // Run once on load
-            updateGroupCheckbox(checkbox.dataset.group);
-        });
-
-        // Handle group checkbox click
-        groupCheckboxes.forEach(groupCheckbox => {
-            groupCheckbox.addEventListener('change', function() {
-                const group = this.dataset.group;
-                const checkState = this.checked;
-
-                document.querySelectorAll(`.permission-checkbox[data-group="${group}"]`).forEach(cb => {
-                    if (!cb.disabled) {
-                        cb.checked = checkState;
-                    }
-                });
-
-                // Ensure 'list' permission is checked if any is selected
-                if (checkState) {
-                    const listCheckbox = document.querySelector(`.permission-checkbox[data-group="${group}"][data-slug$="list"]`);
-                    if (listCheckbox && !listCheckbox.checked) {
-                        listCheckbox.checked = true;
-                    }
-                }
+                updateGroupButton(group);
+                updateGlobalButtonLabel();
             });
         });
+
+        // Checkbox change – update buttons
+        document.querySelectorAll('.permission-checkbox').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const group = this.dataset.group;
+                updateGroupButton(group);
+                updateGlobalButtonLabel();
+            });
+        });
+
+        // Global select all / unselect all
+        const globalBtn = document.getElementById('toggleAllPermissionsBtn');
+
+        if (globalBtn) {
+            globalBtn.addEventListener('click', function() {
+                const allCheckboxes = Array.from(document.querySelectorAll('.permission-checkbox')).filter(cb => !cb.disabled);
+                const allChecked = allCheckboxes.every(cb => cb.checked);
+
+                allCheckboxes.forEach(cb => cb.checked = !allChecked);
+
+                // Always keep all 'list' checkboxes selected if checking all
+                if (!allChecked) {
+                    document.querySelectorAll('.permission-checkbox[data-slug$="list"]').forEach(cb => cb.checked = true);
+                }
+
+                // Update all group buttons
+                const uniqueGroups = new Set([...allCheckboxes.map(cb => cb.dataset.group)]);
+                uniqueGroups.forEach(group => updateGroupButton(group));
+
+                updateGlobalButtonLabel();
+            });
+        }
+
+        // Initialize button states
+        const allCheckboxes = document.querySelectorAll('.permission-checkbox');
+        const uniqueGroups = new Set([...allCheckboxes].map(cb => cb.dataset.group));
+        uniqueGroups.forEach(group => updateGroupButton(group));
+        updateGlobalButtonLabel();
+
     });
 </script>
+
 @endpush

@@ -30,6 +30,7 @@ class AdminPermissionController extends Controller
             $search = $request->query('keyword');
             $permissions = Permission::filter($search)
                 ->latest()
+                ->sortable()
                 ->paginate(Admin::getPerPageLimit())
                 ->withQueryString();
             return view('adminrolepermission::admin.permission.index', compact('permissions'));

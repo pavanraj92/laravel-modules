@@ -9,18 +9,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Config;
+use Kyslik\ColumnSortable\Sortable;
 use Modules\AdminRolePermission\App\Models\Role;
 use Modules\AdminRolePermission\App\Traits\HasRoles;
 
 class Admin extends Authenticatable
 {
-    use HasFactory, SoftDeletes, HasRoles;
-
+    use HasFactory, SoftDeletes, HasRoles, Sortable;
     /**
      * The attributes that are mass assignable.
      */
     protected $fillable = [
-        'name',
         'first_name',
         'last_name',
         'username',
@@ -31,6 +30,7 @@ class Admin extends Authenticatable
         'website_slug'
     ];
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -40,6 +40,28 @@ class Admin extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $sortable = [
+        'name' => 'sortableName',
+        'email',
+        'status',
+        'created_at',
+    ];
+
+    public static function sortableName($query, $direction)
+    {
+        return $query->orderByRaw("CONCAT(first_name, ' ', last_name) $direction");
+    }
+
+    public function getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
+    public function getRoleNameAttribute()
+    {
+        return $this->roles->pluck('name')->first(); // or join with comma if multiple roles
+    }
 
     protected static function boot()
     {
@@ -63,7 +85,7 @@ class Admin extends Authenticatable
         if ($name) {
             return $query->where(function ($q) use ($name) {
                 $q->where('first_name', 'like', '%' . $name . '%')
-                  ->orWhere('last_name', 'like', '%' . $name . '%');
+                    ->orWhere('last_name', 'like', '%' . $name . '%');
             });
         }
         return $query;
