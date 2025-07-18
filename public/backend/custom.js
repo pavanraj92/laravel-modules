@@ -1,15 +1,15 @@
 //csrf token 
-$(function() {
+$(function () {
     $.ajaxSetup({
-        headers: {      
+        headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 });
 
-$(document).ready(function() {
+$(document).ready(function () {
     //update status using ajax
-    $(document).on('click', '.update-status', function() {
+    $(document).on('click', '.update-status', function () {
         var currentElement = $(this);
         var status = $(this).data('status');
         var id = $(this).data('id');
@@ -20,8 +20,8 @@ $(document).ready(function() {
             type: method,
             url: url,
             data: { id: id, status: status },
-            success: function(response) {
-                if (response.success) {                  
+            success: function (response) {
+                if (response.success) {
                     currentElement.tooltip("hide");
                     currentElement.tooltip("dispose");
 
@@ -30,24 +30,24 @@ $(document).ready(function() {
                     $('[data-toggle="tooltip"]').tooltip();
 
                     toastr.success(response.message);
-                } else {                    
+                } else {
                     toastr.error(response.message);
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 // Handle error response
                 console.error('Error updating status:', error);
-                console.error('Status:', status);   
-                console.error('Response:', xhr.responseText);               
+                console.error('Status:', status);
+                console.error('Response:', xhr.responseText);
                 toastr.error('An error occurred while updating the status. please try again.');
             }
         });
     });
 
     //delete record using ajax with confirmation
-    $(document).on('click', '.delete-record', function(e) {
+    $(document).on('click', '.delete-record', function (e) {
         e.preventDefault();
-        var currentElement = $(this);        
+        var currentElement = $(this);
         var id = $(this).data('id');
         var url = $(this).data('url');
         var method = $(this).data('method') || 'POST'; // Default to POST if method is not specified

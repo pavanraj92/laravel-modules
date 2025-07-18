@@ -136,15 +136,18 @@
                         @endadmincan
 
                         @admincan('roles_manager_list|permission_manager_list')
-                        <li class="sidebar-item">
-                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        @php
+                        $activeRoutes = ['admin.roles.*', 'admin.permissions.*'];
+                        @endphp
+                        <li class="sidebar-item {{ Route::is($activeRoutes) ? 'selected' : '' }}">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark {{ Route::is($activeRoutes) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
                                 <i class="mdi mdi-account-key"></i>
                                 <span class="hide-menu">Role Permission Manager</span>
                             </a>
-                            <ul aria-expanded="false" class="collapse first-level">
+                            <ul aria-expanded="false" class="collapse first-level {{ Route::is($activeRoutes) ? 'in' : '' }}">
                                 @admincan('roles_manager_list')
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.roles.index') }}" class="sidebar-link">
+                                <li class="sidebar-item" {{ Route::is('admin.roles.*') ? 'selected' : '' }}>
+                                    <a href="{{ route('admin.roles.index') }}" class="sidebar-link {{ Route::is('admin.roles.*') ? 'active' : '' }}">
                                         <i class="mdi mdi-account-key"></i>
                                         <span class="hide-menu">Role Manager</span>
                                     </a>
@@ -152,8 +155,8 @@
                                 @endadmincan
 
                                 @admincan('permission_manager_list')
-                                <li class="sidebar-item">
-                                    <a href="{{ route('admin.permissions.index') }}" class="sidebar-link">
+                                <li class="sidebar-item" {{ Route::is('admin.permissions.*') ? 'selected' : '' }}>
+                                    <a href="{{ route('admin.permissions.index') }}" class="sidebar-link {{ Route::is('admin.permissions.*') ? 'active' : '' }}">
                                         <i class="mdi mdi-key"></i>
                                         <span class="hide-menu">Permission Manager</span>
                                     </a>

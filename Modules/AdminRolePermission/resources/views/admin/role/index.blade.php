@@ -77,15 +77,15 @@
                                 @foreach ($roles as $role)
                                 <tr>
                                     <th scope="row">{{ $i }}</th>
-                                    <td>{{ $role->name }}</td>
+                                    <td>{{ ucwords($role->name) }}</td>
                                     <td>
                                         {{ $role->created_at->format('Y-m-d H:i:s') }}
                                     </td>
                                     <td>
                                         @php
-                                        $html = '<label for="admins">Select Admins</label><select name="admins[]" class="form-control select2" multiple></select>';
+                                        $html = '<select name="admins[]" class="form-control select2" multiple></select>';
                                         $config = [
-                                        'title' => "Assign Admins to Role: {$role->name}",
+                                        'title' => "Assign admins to role {$role->name}",
                                         'action_url' => route('admin.roles.assign.admins.update', $role),
                                         'ajax_url' => route('admin.roles.assign.admins.edit', $role),
                                         'role_id' => $role->id,
