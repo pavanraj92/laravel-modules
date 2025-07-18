@@ -2,10 +2,10 @@
 
 @section('title', 'Categories Management')
 
-@section('page-title', 'Manage Categories')
+@section('page-title', 'Category Manager')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page">Manage Categories</li>
+    <li class="breadcrumb-item active" aria-current="page">Category Manager</li>
 @endsection
 
 @section('content')

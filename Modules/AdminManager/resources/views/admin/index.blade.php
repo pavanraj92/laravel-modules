@@ -2,10 +2,10 @@
 
 @section('title', 'Admins Management')
 
-@section('page-title', 'Manage Admins')
+@section('page-title', 'Admin Manager')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page">Manage Admins</li>
+    <li class="breadcrumb-item active" aria-current="page">Admin Manager</li>
 @endsection
 
 @section('content')
