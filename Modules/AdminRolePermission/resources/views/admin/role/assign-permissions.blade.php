@@ -146,6 +146,16 @@
         document.querySelectorAll('.permission-checkbox').forEach(cb => {
             cb.addEventListener('change', function() {
                 const group = this.dataset.group;
+                const isListPermission = this.dataset.slug.endsWith('list');
+
+                // If a permission is checked and it's not 'list', auto-check the 'list' permission in same group
+                if (this.checked && !isListPermission) {
+                    const listCB = document.querySelector(`.permission-checkbox[data-group="${group}"][data-slug$="list"]`);
+                    if (listCB && !listCB.disabled) {
+                        listCB.checked = true;
+                    }
+                }
+
                 updateGroupButton(group);
                 updateGlobalButtonLabel();
             });

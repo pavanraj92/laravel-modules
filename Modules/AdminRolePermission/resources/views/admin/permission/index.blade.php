@@ -2,10 +2,10 @@
 
 @section('title', 'Permissions Management')
 
-@section('page-title', 'Manage Permissions')
+@section('page-title', 'Permission Manager')
 
 @section('breadcrumb')
-<li class="breadcrumb-item active" aria-current="page">Manage Permissions</li>
+<li class="breadcrumb-item active" aria-current="page">Permission Manager</li>
 @endsection
 
 @section('content')

@@ -2,7 +2,7 @@
 
 @section('title', 'Roles Management')
 
-@section('page-title', 'Manage Roles')
+@section('page-title', 'Role Manager')
 
 @push('styles')
 <!-- Select2 CSS -->
@@ -17,7 +17,7 @@
 @endpush
 
 @section('breadcrumb')
-<li class="breadcrumb-item active" aria-current="page">Manage Roles</li>
+<li class="breadcrumb-item active" aria-current="page">Role Manager</li>
 @endsection
 
 
