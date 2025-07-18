@@ -4,14 +4,22 @@ namespace Modules\AdminRolePermission\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-
+use Kyslik\ColumnSortable\Sortable;
 
 class Permission extends Model
 {
+    use Sortable;
     protected $fillable = [
         'name',
         'slug',
         'status'
+    ];
+
+    protected $sortable = [
+        'name',
+        'slug',
+        'status',
+        'created_at',
     ];
 
     protected static function boot()

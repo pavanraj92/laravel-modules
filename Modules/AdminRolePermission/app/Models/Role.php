@@ -3,13 +3,22 @@
 namespace Modules\AdminRolePermission\App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
 use Modules\Admin\Models\Admin;
 
 class Role extends Model
 {
+    use Sortable;
+
     protected $fillable = [
         'name',
         'status'
+    ];
+
+     protected $sortable = [
+        'name',
+        'status',
+        'created_at',
     ];
 
     public function permissions()

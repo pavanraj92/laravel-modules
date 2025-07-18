@@ -22,7 +22,7 @@ class UserController extends Controller
         $this->middleware('admincan_permission:users_manager_view')->only(['show']);
         $this->middleware('admincan_permission:users_manager_delete')->only(['destroy']);
     }
-    
+
     /**
      * Display a listing of the resource.
      */
@@ -34,11 +34,11 @@ class UserController extends Controller
             $users = User::where('role_id', $role->id)
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
-                ->latest()
+                ->sortable()
                 ->paginate(User::getPerPageLimit())
                 ->withQueryString();
 
-            return view('user::admin.index', compact('users', 'role','type'));
+            return view('user::admin.index', compact('users', 'role', 'type'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load users: ' . $e->getMessage());
         }
@@ -48,7 +48,7 @@ class UserController extends Controller
     {
         try {
             $role = UserRole::where('slug', $type)->firstOrFail();
-            return view('user::admin.createOrEdit', compact('role','type'));
+            return view('user::admin.createOrEdit', compact('role', 'type'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load users: ' . $e->getMessage());
         }
@@ -63,10 +63,10 @@ class UserController extends Controller
 
             $plainPassword = \Str::random(8);
             $requestData['password'] = Hash::make($plainPassword);
-    
+
             // Create user
             $user = User::create($requestData);
-    
+
             // Send welcome mail
             Mail::to($user->email)->send(new WelcomeMail($user, $plainPassword));
             return redirect()->route('admin.users.index', ['type' => $type])->with('success', 'User created successfully.');
@@ -82,7 +82,7 @@ class UserController extends Controller
     {
         try {
             $role = UserRole::where('slug', $type)->firstOrFail();
-            return view('user::admin.show', compact('user', 'type','role'));
+            return view('user::admin.show', compact('user', 'type', 'role'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load users: ' . $e->getMessage());
         }
@@ -92,7 +92,7 @@ class UserController extends Controller
     {
         try {
             $role = UserRole::where('slug', $type)->firstOrFail();
-            return view('user::admin.createOrEdit', compact('user', 'type','role'));
+            return view('user::admin.createOrEdit', compact('user', 'type', 'role'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load user for editing: ' . $e->getMessage());
         }
@@ -143,7 +143,7 @@ class UserController extends Controller
                 . ' data-id="' . $user->id . '"'
                 . ' class="btn ' . $btnClass . ' btn-sm update-status">' . $label . '</a>';
 
-            return response()->json(['success' => true, 'message' => 'Status updated to '.$label, 'strHtml' => $strHtml]);
+            return response()->json(['success' => true, 'message' => 'Status updated to ' . $label, 'strHtml' => $strHtml]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to delete record.', 'error' => $e->getMessage()], 500);
         }

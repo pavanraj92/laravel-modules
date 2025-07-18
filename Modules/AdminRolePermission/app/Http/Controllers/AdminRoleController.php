@@ -32,7 +32,9 @@ class AdminRoleController extends Controller
         try {
             $search = $request->query('keyword');
             $roles = Role::filter($search)
+                ->where('id', '!=', 1)
                 ->latest()
+                ->sortable()
                 ->paginate(Admin::getPerPageLimit())
                 ->withQueryString();
             return view('adminrolepermission::admin.role.index', compact('roles'));

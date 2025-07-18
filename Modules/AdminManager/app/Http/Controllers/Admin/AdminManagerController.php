@@ -32,10 +32,13 @@ class AdminManagerController extends Controller
             $admins = Admin::where('id', '!=', 1)
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
-                ->latest()
-                ->paginate(Admin::getPerPageLimit())
-                ->withQueryString();
+                ->sortable();
 
+            if (!$request->has('sort')) {
+                $admins->orderByRaw("CONCAT(first_name, ' ', last_name) ASC"); // ✅ fix here
+            }
+
+            $admins = $admins->paginate(Admin::getPerPageLimit())->withQueryString();
             return view('adminmanager::admin.index', compact('admins'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admins: ' . $e->getMessage());
