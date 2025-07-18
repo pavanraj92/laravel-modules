@@ -58,10 +58,10 @@
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Question</th>
-                                        <th scope="col">Status</th>
-                                        <th scope="col">Created At</th>
+                                        <th scope="col">S. No.</th>
+                                        <th scope="col">@sortablelink('question', 'Question')</th>
+                                        <th scope="col">@sortablelink('status', 'Status')</th>
+                                        <th scope="col">@sortablelink('created_at', 'Created At')</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -129,7 +129,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center">No faqs found.</td>
+                                            <td colspan="5" class="text-center">No faqs found.</td>
                                         </tr>
                                     @endif
                                 </tbody>

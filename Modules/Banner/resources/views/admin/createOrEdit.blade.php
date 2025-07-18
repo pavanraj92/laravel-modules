@@ -76,21 +76,40 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="col-md-6">                                
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="status" class="form-control select2" required>
+                                        <option value="1" {{ (($banner?->status ?? old('status')) == '1') ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ (($banner?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
+                                    </select>
+                                    @error('status')
+                                        <div class="text-danger validation-error">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                              
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">                                
                                 <div class="form-group">
                                     <label>Image<span class="text-danger">*</span></label>
                                     <input type="file" name="image" class="form-control" id="imageInput" {{ isset($banner) ? '' : 'required' }}>
                                     @error('image')
                                         <div class="text-danger validation-error">{{ $message }}</div>
-                                    @enderror
-
-                                    <div id="imagePreview" style="margin-top:10px;">
+                                    @enderror                                  
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">                                    
+                                    <div id="imagePreview">
                                         @if(isset($banner) && $banner->image)
-                                            <img src="{{ asset('storage/'.$banner->image) }}" alt="Banner Image" style="max-width: 200px; max-height: 120px;">
+                                            <img src="{{ asset('storage/'.$banner->image) }}" alt="Banner Image" class="img-thumbnail" style="max-width: 200px; max-height: 120px;">
                                         @endif
                                     </div>
                                 </div>
-                            </div>
+                            </div>  
                         </div>
 
                         <div class="form-group">
@@ -168,6 +187,15 @@
                 "Please enter letters only"
             );
 
+            // validator for the URL field
+            $.validator.addMethod(
+                "url",
+                function (value, element) {
+                    return this.optional(element) || /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/.*)?$/.test(value);
+                },
+                "Please enter a valid URL"
+            );
+
             //jquery validation for the form
             $('#bannerForm').validate({
                 ignore: [],
@@ -189,7 +217,8 @@
                     },
                     button_url: {
                         required: true,
-                        minlength: 3
+                        minlength: 3,
+                        url: true
                     },
                     sort_order: {
                         required: true,

@@ -5,10 +5,10 @@ namespace Modules\Faq\App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Support\Facades\Config;
-
+use Kyslik\ColumnSortable\Sortable;
 class Faq extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     /**
      * The attributes that are mass assignable.
@@ -17,6 +17,14 @@ class Faq extends Model
         'question',
         'answer',
         'status'
+    ];
+
+    /**
+     * The attributes that should be sortable.
+     */
+    public $sortable = [
+        'question',
+        'status',
     ];
 
     public function scopeFilter($query, $question)

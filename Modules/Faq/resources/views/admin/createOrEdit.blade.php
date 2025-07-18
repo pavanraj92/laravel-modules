@@ -24,7 +24,7 @@
                         <div class="row">
                             <div class="col-md-6">                                
                                 <div class="form-group">
-                                    <label>Question</label>
+                                    <label>Question<span class="text-danger">*</span></label>
                                     <input type="text" name="question" class="form-control"
                                         value="{{ $faq?->question ?? old('question') }}" required>
                                     @error('question')
@@ -34,10 +34,10 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Status</label>
+                                    <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
-                                        <option value="1" {{ (($page?->status ?? old('status')) == '1') ? 'selected' : '' }}>Active</option>
-                                        <option value="0" {{ (($page?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
+                                        <option value="1" {{ (($faq?->status ?? old('status')) == '1') ? 'selected' : '' }}>Active</option>
+                                        <option value="0" {{ (($faq?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
                                     </select>
                                     @error('status')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Answer</label>
+                            <label>Answer<span class="text-danger">*</span></label>
                             <textarea name="answer" id="answer" class="form-control answer-editor">{{ $faq?->answer ?? old('answer') }}</textarea>
                             @error('answer')
                                 <div class="text-danger validation-error">{{ $message }}</div>

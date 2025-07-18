@@ -20,6 +20,7 @@ class BannerCreateRequest extends FormRequest
             'sort_order' => 'nullable|numeric|max:255',
             'description' => 'required|string|min:3|max:65535',
             'image' => 'required|image',
+            'status' => 'required|boolean',
         ];
     }
 
