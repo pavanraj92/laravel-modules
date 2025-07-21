@@ -5,7 +5,7 @@
 @section('page-title', isset($setting) ?  'Edit Setting' : 'Create Setting')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.settings.index') }}">Manage Settings</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.settings.index') }}">Setting Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{isset($setting) ?  'Edit Setting' : 'Create Setting'}}</li>
 @endsection
 
@@ -125,6 +125,9 @@
                 errorPlacement: function(error, element) {
                     $('.validation-error').hide(); // hide blade errors
                     error.insertAfter(element);
+                },
+                success: function(label, element) {
+                    $('.validation-error').hide(); // hide blade error if any field becomes valid
                 }
             });
         });

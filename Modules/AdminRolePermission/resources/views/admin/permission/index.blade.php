@@ -25,11 +25,14 @@
                                     value="{{ app('request')->query('keyword') }}" placeholder="Enter name">
                             </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <button type="submit" form="filterForm" class="btn btn-primary mb-3">Filter</button>
-                        <a href="{{ route('admin.permissions.index') }}" class="btn btn-secondary mb-3">Reset</a>
-                    </div>
+                        <div class="col-auto mt-1 text-right">
+                            <div class="form-group">
+                                <label for="created_at">&nbsp;</label>
+                                <button type="submit" form="filterForm" class="btn btn-primary mt-4">Filter</button>
+                                <a href="{{ route('admin.permissions.index') }}" class="btn btn-secondary mt-4">Reset</a>
+                            </div>
+                        </div>
+                    </div>                    
                 </form>
             </div>
         </div>
@@ -91,7 +94,14 @@
                                     <td>
                                         {{ $permission->created_at->format('Y-m-d H:i:s') }}
                                     </td>
-                                    <td>
+                                    <td style="width: 10%;">
+                                        @admincan('permission_manager_view')
+                                        <a href="{{ route('admin.permissions.show', $permission) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="View this record"
+                                            class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
+                                        @endadmincan
                                         @admincan('permission_manager_edit')
                                         <a href="{{ route('admin.permissions.edit', $permission) }}"
                                             data-toggle="tooltip"
@@ -100,13 +110,7 @@
                                             class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
                                         @endadmincan
 
-                                        @admincan('permission_manager_view')
-                                        <a href="{{ route('admin.permissions.show', $permission) }}"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="View this record"
-                                            class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
-                                        @endadmincan
+                                      
                                         {{--
                                             @admincan('permission_manager_delete')
                                             <a href="javascript:void(0)"

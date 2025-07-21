@@ -5,7 +5,7 @@
 @section('page-title', isset($user) ? 'Edit '.$role->name : 'Create '.$role->name)
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.users.index', ['type' => $type]) }}">Manage {{$role->name}}s</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.users.index', ['type' => $type]) }}">{{$role->name}} Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{isset($user) ? 'Edit '.$role->name : 'Create '.$role->name}}</li>
 @endsection
 
@@ -187,6 +187,9 @@
                 errorPlacement: function(error, element) {
                     $('.validation-error').hide(); // hide blade errors
                     error.insertAfter(element);
+                },
+                success: function(label, element) {
+                    $('.validation-error').hide(); // hide blade error if any field becomes valid
                 }
             });
         });

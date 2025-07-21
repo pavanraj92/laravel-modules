@@ -5,7 +5,7 @@
 @section('page-title', isset($email) ? 'Edit Email' : 'Create Email')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.emails.index') }}">Manage Emails</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.emails.index') }}">Email Template Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{isset($email) ? 'Edit Email' : 'Create Email'}}</li>
 @endsection
 
@@ -185,6 +185,9 @@
                     } else {
                         error.insertAfter(element);
                     }
+                },
+                success: function(label, element) {
+                    $('.validation-error').hide(); // hide blade error if any field becomes valid
                 }
             });
         });

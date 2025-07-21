@@ -39,11 +39,14 @@
                                     value="{{ app('request')->query('keyword') }}" placeholder="Enter name">
                             </div>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <button type="submit" form="filterForm" class="btn btn-primary mb-3">Filter</button>
-                        <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary mb-3">Reset</a>
-                    </div>
+                        <div class="col-auto mt-1 text-right">
+                            <div class="form-group">
+                                <label for="created_at">&nbsp;</label>
+                                <button type="submit" form="filterForm" class="btn btn-primary mt-4">Filter</button>
+                                <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary mt-4">Reset</a>
+                            </div>
+                        </div>
+                    </div>                  
                 </form>
             </div>
         </div>
@@ -81,7 +84,7 @@
                                     <td>
                                         {{ $role->created_at->format('Y-m-d H:i:s') }}
                                     </td>
-                                    <td>
+                                    <td style="width: 15%;">
                                         @php
                                         $html = '<select name="admins[]" class="form-control select2" multiple></select>';
                                         $config = [
@@ -114,13 +117,6 @@
                                             <i class="mdi mdi-account-multiple"></i>
                                         </button>
                                         @endadmincan
-                                        @admincan('roles_manager_edit')
-                                        <a href="{{ route('admin.roles.edit', $role) }}"
-                                            data-toggle="tooltip"
-                                            data-placement="top"
-                                            title="Edit this record"
-                                            class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
-                                        @endadmincan
                                         @admincan('roles_manager_view')
                                         <a href="{{ route('admin.roles.show', $role) }}"
                                             data-toggle="tooltip"
@@ -128,6 +124,13 @@
                                             title="View this record"
                                             class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
                                         @endadmincan
+                                        @admincan('roles_manager_edit')
+                                        <a href="{{ route('admin.roles.edit', $role) }}"
+                                            data-toggle="tooltip"
+                                            data-placement="top"
+                                            title="Edit this record"
+                                            class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                        @endadmincan                                       
                                         @admincan('roles_manager_delete')
                                         <a href="javascript:void(0)"
                                             data-toggle="tooltip"

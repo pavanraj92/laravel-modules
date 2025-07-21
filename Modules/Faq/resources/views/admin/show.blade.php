@@ -5,7 +5,7 @@
 @section('page-title', 'Faq Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.faqs.index') }}">Manage Faqs</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.faqs.index') }}">Faq Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">Faq Details</li>
 @endsection
 

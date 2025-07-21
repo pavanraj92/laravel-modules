@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="../../assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('backend/assets/images/favicon.png') }}">
     <title>@yield('title', 'Admin Panel')</title>
     <link href="{{ asset('backend/assets/libs/chartist/dist/chartist.min.css') }}" rel="stylesheet">
     <link href="{{ asset('backend/dist/css/style.min.css') }}" rel="stylesheet">
@@ -23,7 +23,7 @@
     @stack('styles')
 </head>
 
-<body>
+<body data-gr-ext-installed class="toggle-sidebar">
     @php
     $admin = auth('admin')->user();
     @endphp
@@ -42,7 +42,7 @@
                         <i class="ti-menu ti-close"></i>
                     </a>
                     <div class="navbar-brand">
-                        <a href="index.html" class="logo">
+                        <a href="{{ url('admin/dashboard') }}" class="logo">
                             <b class="logo-icon">
                                 <img src="{{ asset('backend/assets/images/logo-icon.png') }}" alt="homepage"
                                     class="dark-logo" />
@@ -62,27 +62,10 @@
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="ti-more"></i>
                     </a>
+                    <i class="bi bi-list toggle-sidebar-btn"></i>
                 </div>
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
-                    <ul class="navbar-nav float-left mr-auto">
-                        <li class="nav-item search-box">
-                            <a class="nav-link waves-effect waves-dark" href="javascript:void(0)">
-                                <div class="d-flex align-items-center">
-                                    <i class="mdi mdi-magnify font-20 mr-1"></i>
-                                    <div class="ml-1 d-none d-sm-block">
-                                        <span>Search</span>
-                                    </div>
-                                </div>
-                            </a>
-                            <form class="app-search position-absolute">
-                                <input type="text" class="form-control" placeholder="Search &amp; enter">
-                                <a class="srh-btn">
-                                    <i class="ti-close"></i>
-                                </a>
-                            </form>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav float-right">
+                    <ul class="navbar-nav ml-auto">
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark pro-pic"
                                 href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -109,10 +92,10 @@
                 </div>
             </nav>
         </header>
-
+        
+        <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <aside class="left-sidebar d-flex flex-column" data-sidebarbg="skin5">
             <div class="scroll-sidebar flex-grow-1" style="overflow-y: auto;">
-
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
                         @admincan('dashboard')
@@ -207,7 +190,7 @@
                         <li class="sidebar-item" {{ Route::is('admin.pages.*') ? 'selected' : '' }}>
                             <a href="{{ route('admin.pages.index') }}" class="sidebar-link waves-effect waves-dark {{ Route::is('admin.pages.*') ? 'active' : '' }}">
                                 <i class="fas fa-file-alt"></i>
-                                <span class="hide-menu">CMS Pages Manager</span>
+                                <span class="hide-menu">CMS Page Manager</span>
                             </a>
                         </li>
                         @endadmincan
@@ -269,6 +252,7 @@
             </div>
             @endadmincan
         </aside>
+
         <div class="page-wrapper">
             <!-- Bread crumb and right sidebar toggle -->
             <div class="page-breadcrumb">

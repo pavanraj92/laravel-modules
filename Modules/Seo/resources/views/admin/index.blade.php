@@ -2,10 +2,10 @@
 
 @section('title', 'SEO Meta Management')
 
-@section('page-title', 'Manage SEO Meta')
+@section('page-title', 'Seo Manager')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page">Manage SEO Meta</li>
+    <li class="breadcrumb-item active" aria-current="page">Seo Manager</li>
 @endsection
 
 @section('content')
@@ -38,11 +38,14 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" form="filterForm" class="btn btn-primary mb-3">Filter</button>
-                            <a href="{{ route('admin.seo.index') }}" class="btn btn-secondary mb-3">Reset</a>
-                        </div>
+                            <div class="col-auto mt-1 text-right">
+                                <div class="form-group">
+                                    <label for="created_at">&nbsp;</label>
+                                    <button type="submit" form="filterForm" class="btn btn-primary mt-4">Filter</button>
+                                    <a href="{{ route('admin.seo.index') }}" class="btn btn-secondary mt-4">Reset</a>
+                                </div>
+                            </div>
+                        </div>                       
                     </form>
                 </div>
             </div>
@@ -61,12 +64,12 @@
                             <table class="table">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th scope="col">#</th>
-                                        <th>@sortablelink('model_name', 'Model Name')</th>
+                                        <th scope="col">S. No.</th>
+                                        <th>@sortablelink('model_name', 'Model Name', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
                                         <th scope="col">Model Record ID</th>
-                                        <th>@sortablelink('meta_title', 'Meta Title')</th>
+                                        <th>@sortablelink('meta_title', 'Meta Title', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
                                         <th scope="col">Meta Description</th>
-                                        <th>@sortablelink('created_at', 'Created At')</th>
+                                        <th>@sortablelink('created_at', 'Created At', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -87,14 +90,7 @@
                                                         ? $seoMeta->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
                                                         : '—' }}
                                                 </td>
-                                                <td>
-                                                    @admincan('seo_manager_edit')
-                                                    <a href="{{ route('admin.seo.edit', $seoMeta) }}"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="Edit this record"
-                                                        class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
-                                                    @endadmincan
+                                                <td style="width: 10%;">
                                                     @admincan('seo_manager_view')
                                                     <a href="{{ route('admin.seo.show', $seoMeta) }}" 
                                                         data-toggle="tooltip"
@@ -102,6 +98,13 @@
                                                         title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
                                                     @endadmincan
+                                                    @admincan('seo_manager_edit')
+                                                    <a href="{{ route('admin.seo.edit', $seoMeta) }}"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Edit this record"
+                                                        class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                                    @endadmincan                                                  
                                                     @admincan('seo_manager_delete')
                                                     <a href="javascript:void(0)" 
                                                         data-toggle="tooltip" 

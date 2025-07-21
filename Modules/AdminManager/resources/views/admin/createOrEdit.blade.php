@@ -5,7 +5,7 @@
 @section('page-title', isset($admin) ? 'Edit Admin' : 'Create Admin')
 
 @section('breadcrumb')
-<li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.admins.index') }}">Manage Admins</a></li>
+<li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.admins.index') }}">Admin Manager</a></li>
 <li class="breadcrumb-item active" aria-current="page">{{isset($admin) ? 'Edit Admin' : 'Create Admin'}}</li>
 @endsection
 
@@ -207,6 +207,9 @@
                 } else {
                     error.insertAfter(element);
                 }
+            },
+            success: function(label, element) {
+                $('.validation-error').hide(); // hide blade error if any field becomes valid
             }
         });
     });

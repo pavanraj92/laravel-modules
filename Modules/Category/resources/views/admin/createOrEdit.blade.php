@@ -5,7 +5,7 @@
 @section('page-title', isset($category) ? 'Edit Category' : 'Create Category')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.categories.index') }}">Manage Categories</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.categories.index') }}">Category Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{isset($category) ? 'Edit Category' : 'Create Category'}}</li>
 @endsection
 
@@ -171,6 +171,9 @@
                 errorPlacement: function(error, element) {
                     $('.validation-error').hide(); // hide blade errors
                     error.insertAfter(element);
+                },
+                success: function(label, element) {
+                    $('.validation-error').hide(); // hide blade error if any field becomes valid
                 }
             });
 

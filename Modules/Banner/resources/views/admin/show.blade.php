@@ -5,7 +5,7 @@
 @section('page-title', 'Banner Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.banners.index') }}">Manage Banners</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.banners.index') }}">Banner Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">Banner Details</li>
 @endsection
 
