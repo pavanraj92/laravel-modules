@@ -2,10 +2,10 @@
 
 @section('title', 'Settings Management')
 
-@section('page-title', 'Manage Settings')
+@section('page-title', 'Setting Manager')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page">Manage Settings</li>
+    <li class="breadcrumb-item active" aria-current="page">Setting Manager</li>
 @endsection
 
 @section('content')
@@ -25,11 +25,14 @@
                                         value="{{ app('request')->query('keyword') }}" placeholder="Enter title">                                   
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" form="filterForm" class="btn btn-primary mb-3">Filter</button>
-                            <a href="{{ route('admin.settings.index') }}" class="btn btn-secondary mb-3">Reset</a>
-                        </div>
+                            <div class="col-auto mt-1 text-right">
+                                <div class="form-group">
+                                    <label for="created_at">&nbsp;</label>
+                                    <button type="submit" form="filterForm" class="btn btn-primary mt-4">Filter</button>
+                                    <a href="{{ route('admin.settings.index') }}" class="btn btn-secondary mt-4">Reset</a>
+                                </div>
+                            </div>
+                        </div>                       
                     </form>
                 </div>
             </div>
@@ -49,9 +52,10 @@
                                 <thead class="thead-light">
                                     <tr>
                                         <th scope="col">S. No.</th>
-                                        <th scope="col">@sortablelink('title', 'Title')</th>
-                                        <th scope="col">@sortablelink('slug', 'Slug')</th>
-                                        <th scope="col">@sortablelink('created_at', 'Created At')</th>
+                                        <th scope="col">@sortablelink('title', 'Title', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
+                                        <th scope="col">@sortablelink('slug', 'Slug', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
+                                        <th scope="col">@sortablelink('config_value', 'Value', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
+                                        <th scope="col">@sortablelink('created_at', 'Created At', [], ['style' => 'color: #4F5467; text-decoration: none;'])</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -65,20 +69,13 @@
                                                 <th scope="row">{{ $i }}</th>
                                                 <td>{{ $setting->title ?? '' }}</td>
                                                 <td>{{ $setting->slug ?? '' }}</td>
+                                                <td>{{ $setting->config_value ?? '' }}</td>
                                                 <td>
                                                     {{ $setting->created_at
                                                         ? $setting->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
                                                         : '—' }}
                                                 </td>
-                                                <td>
-                                                    @admincan('settings_manager_edit')
-                                                    <a href="{{ route('admin.settings.edit', $setting) }}"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="Edit this record"
-                                                        class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
-                                                    @endadmincan
-
+                                                <td style="width: 10%;">
                                                     @admincan('settings_manager_view')
                                                     <a href="{{ route('admin.settings.show', $setting) }}" 
                                                         data-toggle="tooltip"
@@ -86,6 +83,13 @@
                                                         title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
                                                     @endadmincan
+                                                    @admincan('settings_manager_edit')
+                                                    <a href="{{ route('admin.settings.edit', $setting) }}"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Edit this record"
+                                                        class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                                    @endadmincan                                                   
                                                 </td>
                                             </tr>
                                             @php
@@ -94,7 +98,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="5" class="text-center">No settings found.</td>
+                                            <td colspan="6" class="text-center">No records found.</td>
                                         </tr>
                                     @endif
                                 </tbody>

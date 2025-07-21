@@ -5,7 +5,7 @@
 @section('page-title', isset($page) ? 'Edit CMS Page' : 'Create CMS Page')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage CMS Pages</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">CMS Page Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">{{isset($page) ? 'Edit CMS Page' : 'Create CMS Page'}}</li>
 @endsection
 
@@ -170,6 +170,9 @@
                     } else {
                         error.insertAfter(element);
                     }
+                },
+                success: function(label, element) {
+                    $('.validation-error').hide(); // hide blade error if any field becomes valid
                 }
             });
         });

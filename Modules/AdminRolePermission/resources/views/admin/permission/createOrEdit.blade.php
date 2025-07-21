@@ -5,7 +5,7 @@
 @section('page-title', 'Create Permission')
 
 @section('breadcrumb')
-<li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.permissions.index') }}">Manage Permissions</a></li>
+<li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.permissions.index') }}">Permission Manager</a></li>
 <li class="breadcrumb-item active" aria-current="page">Create Permission</li>
 @endsection
 
@@ -81,6 +81,9 @@
             errorPlacement: function(error, element) {
                 $('.validation-error').hide();
                 error.insertAfter(element);
+            },
+            success: function(label, element) {
+                $('.validation-error').hide(); // hide blade error if any field becomes valid
             }
         });
     });

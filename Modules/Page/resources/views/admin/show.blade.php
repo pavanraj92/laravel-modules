@@ -5,7 +5,7 @@
 @section('page-title', 'CMS Page Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">Manage CMS Pages</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.pages.index') }}">CMS Page Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">CMS Page Details</li>
 @endsection
 

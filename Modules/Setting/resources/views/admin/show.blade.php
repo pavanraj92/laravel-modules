@@ -5,7 +5,7 @@
 @section('page-title', 'Setting Details')
 
 @section('breadcrumb')
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.settings.index') }}">Manage Settings</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.settings.index') }}">Setting Manager</a></li>
     <li class="breadcrumb-item active" aria-current="page">Setting Details</li>
 @endsection
 

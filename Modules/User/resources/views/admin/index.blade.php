@@ -35,11 +35,14 @@
                                     </select>                                   
                                 </div>
                             </div>
-                        </div>
-                        <div class="text-right">
-                            <button type="submit" form="filterForm" class="btn btn-primary mb-3">Filter</button>
-                            <a href="{{ route('admin.users.index', ['type' => $type]) }}" class="btn btn-secondary mb-3">Reset</a>
-                        </div>
+                            <div class="col-auto mt-1 text-right">
+                                <div class="form-group">
+                                    <label for="created_at">&nbsp;</label>
+                                    <button type="submit" form="filterForm" class="btn btn-primary mt-4">Filter</button>
+                                    <a href="{{ route('admin.users.index', ['type' => $type]) }}" class="btn btn-secondary mt-4">Reset</a>
+                                </div>
+                            </div>
+                        </div>                        
                     </form>
                 </div>
             </div>
@@ -98,14 +101,7 @@
                                                         ? $user->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
                                                         : '—' }}
                                                 </td>
-                                                <td>
-                                                    @admincan('users_manager_edit')
-                                                    <a href="{{ route('admin.users.edit', ['type' => $type, 'user' => $user]) }}"
-                                                        data-toggle="tooltip"
-                                                        data-placement="top"
-                                                        title="Edit this record"
-                                                        class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
-                                                    @endadmincan
+                                                <td style="width: 10%;">
                                                     @admincan('users_manager_view')
                                                     <a href="{{ route('admin.users.show', ['type' => $type, 'user' => $user]) }}" 
                                                         data-toggle="tooltip"
@@ -113,6 +109,13 @@
                                                         title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
                                                     @endadmincan
+                                                    @admincan('users_manager_edit')
+                                                    <a href="{{ route('admin.users.edit', ['type' => $type, 'user' => $user]) }}"
+                                                        data-toggle="tooltip"
+                                                        data-placement="top"
+                                                        title="Edit this record"
+                                                        class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                                    @endadmincan                                                  
                                                     @admincan('users_manager_delete')
                                                     <a href="javascript:void(0)" 
                                                         data-toggle="tooltip" 

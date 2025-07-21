@@ -52,7 +52,7 @@ $(document).ready(function () {
         var url = $(this).data('url');
         var method = $(this).data('method') || 'POST'; // Default to POST if method is not specified
         var text = $(this).data('text') || "You won't be able to revert this!"; // Default text if not specified
-
+    
         Swal.fire({
             title: 'Are you sure?',
             text: text,
@@ -72,7 +72,7 @@ $(document).ready(function () {
                     type: method,
                     url: url,
                     data: { id: id },
-                    success: function (response) {
+                    success: function (response) {                        
                         if (response.success) {
                             currentElement.closest("tr").remove();
                             toastr.success(response.message);
