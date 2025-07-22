@@ -10,5 +10,6 @@
     "AdminManager": true,
     "UserRole": true,
     "AdminRolePermission": true,
-    "Seo": true
+    "Seo": true,
+    "Product": true
 }

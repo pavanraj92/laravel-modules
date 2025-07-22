@@ -15,7 +15,7 @@ class CategoryCreateRequest extends FormRequest
         return [           
             'parent_category_id' => 'nullable|numeric',        
             'title' => 'required|string|min:3|max:255|unique:categories,title',
-            'sort_order' => 'nullable|numeric|max:255',
+            'sort_order' => 'required|numeric|min:0|max:2147483647|unique:categories,sort_order',
             'image' => 'required|image',
             'status' => 'required|in:0,1',
         ];
