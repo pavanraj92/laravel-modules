@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <div class="form-group">
-                                    <label for="title">Title</label>
+                                    <label for="title">keywords</label>
                                     <input type="text" name="keyword" id="keyword" class="form-control"
                                         value="{{ app('request')->query('keyword') }}" placeholder="Enter title">                                   
                                 </div>

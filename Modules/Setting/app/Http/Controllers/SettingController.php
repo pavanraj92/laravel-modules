@@ -4,91 +4,53 @@ namespace Modules\Setting\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Modules\Setting\App\Http\Requests\SettingCreateRequest;
-use Modules\Setting\App\Http\Requests\SettingUpdateRequest;
-use Modules\Setting\App\Models\Setting;
 
 class SettingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        try {
-            $settings = Setting::
-                filter($request->query('keyword'))
-                ->latest()
-                ->paginate(5)
-                ->withQueryString();
-
-            return view('setting::admin.index', compact('settings'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load settings: ' . $e->getMessage());
-        }
-    }
-
-    public function create()
-    {
-        try {
-            return view('setting::admin.createOrEdit');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load settings: ' . $e->getMessage());
-        }
-    }
-
-    public function store(SettingCreateRequest $request)
-    {
-        try {
-            $requestData = $request->validated();
-
-            Setting::create($requestData);
-            return redirect()->route('admin.settings.index')->with('success', 'setting created successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load settings: ' . $e->getMessage());
-        }
+        return view('setting::index');
     }
 
     /**
-     * show setting details
+     * Show the form for creating a new resource.
      */
-    public function show(Setting $setting)
+    public function create()
     {
-        try {
-            return view('setting::admin.show', compact('setting'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load settings: ' . $e->getMessage());
-        }
+        return view('setting::create');
     }
 
-    public function edit(Setting $setting)
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request) {}
+
+    /**
+     * Show the specified resource.
+     */
+    public function show($id)
     {
-        try {
-            return view('setting::admin.createOrEdit', compact('setting'));
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load setting for editing: ' . $e->getMessage());
-        }
+        return view('setting::show');
     }
 
-    public function update(SettingUpdateRequest $request, Setting $setting)
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit($id)
     {
-        try {
-            $requestData = $request->validated();
-
-            $setting->update($requestData);
-            return redirect()->route('admin.settings.index')->with('success', 'Setting updated successfully.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load setting for editing: ' . $e->getMessage());
-        }
+        return view('setting::edit');
     }
 
-    public function destroy(Setting $setting)
-    {
-        try {
-            $setting->delete();
-            return response()->json(['success' => true, 'message' => 'Record deleted successfully.']);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Failed to delete record.', 'error' => $e->getMessage()], 500);
-        }
-    }
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, $id) {}
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($id) {}
 }

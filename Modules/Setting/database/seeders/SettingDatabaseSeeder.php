@@ -21,12 +21,12 @@ class SettingDatabaseSeeder extends Seeder
             [
                 'slug' => 'admin_date_format',
                 'title' => 'Admin Date Format',
-                'config_value' => 'd F, Y',
+                'config_value' => 'd M Y',
             ],
             [
                 'slug' => 'admin_date_time_format',
                 'title' => 'Admin Date Time Format',
-                'config_value' => 'd F, Y H:i A',
+                'config_value' => 'd M Y H:i:s',
             ]
         ];
     

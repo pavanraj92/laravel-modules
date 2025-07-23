@@ -20,7 +20,7 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="title">Keyword</label>
+                                <label for="title">Keywords</label>
                                 <input type="text" name="keyword" id="keyword" class="form-control"
                                     value="{{ app('request')->query('keyword') }}" placeholder="Enter name">
                             </div>
@@ -130,7 +130,7 @@
                                 @endforeach
                                 @else
                                 <tr>
-                                    <td colspan="4" class="text-center">No permissions found.</td>
+                                    <td colspan="6" class="text-center">No records found.</td>
                                 </tr>
                                 @endif
                             </tbody>
