@@ -12,5 +12,7 @@ class EmailDatabaseSeeder extends Seeder
     public function run(): void
     {
         // $this->call([]);
+        $this->call(MailDatabaseSeeder::class);
+        $this->command->info('Email database seeded successfully.');
     }
 }

@@ -8,7 +8,7 @@ use Modules\Email\App\Http\Requests\EmailCreateRequest;
 use Modules\Email\App\Http\Requests\EmailUpdateRequest;
 use Modules\Email\App\Models\Email;
 
-class EmailController extends Controller
+class EmailManagerController extends Controller
 {
     public function __construct()
     {
@@ -25,6 +25,7 @@ class EmailController extends Controller
             $emails = Email::
                 filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
+                ->sortable()
                 ->latest()
                 ->paginate(Email::getPerPageLimit())
                 ->withQueryString();

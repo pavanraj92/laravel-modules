@@ -24,6 +24,7 @@ class SeoManagerController extends Controller
             $seoMetas = SeoMeta::filter($request->query('keyword'))
                 ->filterByModel($request->query('model_name'))
                 ->sortable()
+                ->latest()
                 ->paginate(SeoMeta::getPerPageLimit())
                 ->withQueryString();
 

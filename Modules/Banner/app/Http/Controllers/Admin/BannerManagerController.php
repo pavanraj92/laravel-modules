@@ -32,6 +32,7 @@ class BannerManagerController extends Controller
                 filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->sortable()
+                ->latest()
                 ->paginate(Banner::getPerPageLimit())
                 ->withQueryString();
 

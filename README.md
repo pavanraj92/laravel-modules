@@ -87,6 +87,11 @@ php artisan db:seed --class="Modules\User\Database\Seeders\SeedUserRolesSeeder"
 php artisan db:seed --class="Modules\Setting\Database\Seeders\SettingDatabaseSeeder"
 ```
 
+### mail template seeder
+```bash
+php artisan db:seed --class="Modules\Email\Database\Seeders\EmailDatabaseSeeder"
+```
+
 #### Admin Super User Seeder (Optional)
 ```bash
 php artisan db:seed --class="Modules\Admin\Database\Seeders\AdminDatabaseSeeder"

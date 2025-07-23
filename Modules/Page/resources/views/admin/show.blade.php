@@ -18,7 +18,7 @@
                 <div class="card">                    
                     <div class="table-responsive">
                          <div class="card-body">      
-                            <table class="table table-responsive-lg table-no-border">
+                            <table class="table table-striped">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Title</th>
@@ -26,7 +26,7 @@
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Content</th>
-                                        <td scope="col">{{ $page->content ?? 'N/A' }}</td>                                   
+                                        <td scope="col">{!! $page->content ?? 'N/A' !!}</td>                                   
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Status</th>

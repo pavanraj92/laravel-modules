@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Modules\User\App\Mail\WelcomeMail;
 
-class UserController extends Controller
+class UserManagerController extends Controller
 {
     public function __construct()
     {
@@ -35,6 +35,7 @@ class UserController extends Controller
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->sortable()
+                ->latest()
                 ->paginate(User::getPerPageLimit())
                 ->withQueryString();
 
@@ -69,7 +70,7 @@ class UserController extends Controller
 
             // Send welcome mail
             Mail::to($user->email)->send(new WelcomeMail($user, $plainPassword));
-            return redirect()->route('admin.users.index', ['type' => $type])->with('success', 'User created successfully.');
+            return redirect()->route('admin.users.index', ['type' => $type])->with('success', ucfirst($type).' created successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load users: ' . $e->getMessage());
         }
@@ -94,7 +95,7 @@ class UserController extends Controller
             $role = UserRole::where('slug', $type)->firstOrFail();
             return view('user::admin.createOrEdit', compact('user', 'type', 'role'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load user for editing: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to load for editing: ' . $e->getMessage());
         }
     }
 
@@ -104,9 +105,9 @@ class UserController extends Controller
             $requestData = $request->validated();
 
             $user->update($requestData);
-            return redirect()->route('admin.users.index', ['type' => $type])->with('success', 'User updated successfully.');
+            return redirect()->route('admin.users.index', ['type' => $type])->with('success', ucfirst($type).' updated successfully.');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Failed to load user for editing: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to load for editing: ' . $e->getMessage());
         }
     }
 
