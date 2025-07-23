@@ -124,7 +124,7 @@
                         @endphp
                         <li class="sidebar-item {{ Route::is($activeRoutes) ? 'selected' : '' }}">
                             <a class="sidebar-link has-arrow waves-effect waves-dark {{ Route::is($activeRoutes) ? 'active' : '' }}" href="javascript:void(0)" aria-expanded="false">
-                                <i class="mdi mdi-account-key"></i>
+                                <i class="mdi mdi-security"></i>
                                 <span class="hide-menu">Role Permission Manager</span>
                             </a>
                             <ul aria-expanded="false" class="collapse first-level {{ Route::is($activeRoutes) ? 'in' : '' }}">
@@ -266,9 +266,12 @@
                         <div class="d-flex align-items-center justify-content-end">
                             <nav aria-label="breadcrumb">
                                 <ol class="breadcrumb">
-                                    <li class="breadcrumb-item">
-                                        <a href="{{ route('admin.dashboard') }}">Home</a>
-                                    </li>
+                                    <!-- check route name -->
+                                    @if (!Route::is('admin.dashboard'))
+                                        <li class="breadcrumb-item">
+                                            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                        </li>
+                                    @endif
                                     @yield('breadcrumb')
                                 </ol>
                             </nav>
