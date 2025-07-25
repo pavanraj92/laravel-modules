@@ -106,17 +106,7 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
-                        @endadmincan
-
-                        @admincan('admin_manager_list')
-                        <li class="sidebar-item {{ Route::is('admin.admins.*') ? 'selected' : '' }}">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.admins.*') ? 'active' : '' }}"
-                                href="{{ route('admin.admins.index') }}" aria-expanded="false">
-                                <i class="fas fa-users"></i>
-                                <span class="hide-menu">Admin Manager</span>
-                            </a>
-                        </li>
-                        @endadmincan
+                        @endadmincan                       
 
                         @admincan('roles_manager_list|permission_manager_list')
                         @php
@@ -147,6 +137,16 @@
                                 @endadmincan
 
                             </ul>
+                        </li>
+                        @endadmincan
+
+                         @admincan('admin_manager_list')
+                        <li class="sidebar-item {{ Route::is('admin.admins.*') ? 'selected' : '' }}">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link {{ Route::is('admin.admins.*') ? 'active' : '' }}"
+                                href="{{ route('admin.admins.index') }}" aria-expanded="false">
+                                <i class="fas fa-users"></i>
+                                <span class="hide-menu">Admin Manager</span>
+                            </a>
                         </li>
                         @endadmincan
 
@@ -285,8 +285,7 @@
 
             <!-- footer -->
             <footer class="footer text-center">
-                All Rights Reserved by Dotsquares Designed and Developed by <a href="https://www.dotsquares.com"
-                    target="_blank">Dotsquares</a>.
+                All rights reserved. Designed and developed by <a href="https://www.dotsquares.com" target="_blank">Dotsquares</a>.
             </footer>
             <!-- End footer -->
         </div>
