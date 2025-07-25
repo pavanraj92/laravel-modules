@@ -24,6 +24,7 @@ class ForgotPasswordMail extends Mailable
 
     public function build()
     {
+        
         $reset_link = url('admin/reset-password') . '/' . $this->user->token . '?email=' . $this->user->email;
         $emailTemplate = Email::whereSlug('password_reset')->first(['subject', 'description']);
 
