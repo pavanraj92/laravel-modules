@@ -5,8 +5,6 @@ namespace Modules\Enquiry\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Schema;
-use Modules\Email\App\Models\Email;
 use Modules\Enquiry\App\Http\Requests\UpdateEnquiryRequest;
 use Modules\Enquiry\Models\Enquiry;
 use Modules\Enquiry\Emails\EnquiryReplyByAdminMail;
@@ -135,6 +133,7 @@ class EnquiryManagerController extends Controller
 
     public function closeStatus(Request $request, Enquiry $enquiry)
     {
+        // Close enquiry status
         if ($enquiry->status === 'replied') {
             $enquiry->status = 'closed';
             $enquiry->save();
@@ -148,37 +147,5 @@ class EnquiryManagerController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'Status not allowed to change.'], 403);
-    }
-
-    /**
-     * Update the status of the enquiry.
-     */
-    public function updateStatus(Request $request)
-    {
-        try {
-            $enquiry = Enquiry::findOrFail($request->id);
-            $enquiry->status = $request->status;
-            $enquiry->save();
-
-            // create status html dynamically
-            $dataStatus = $enquiry->status == '1' ? '0' : '1';
-            $label = $enquiry->status == '1' ? 'Active' : 'InActive';
-            $btnClass = $enquiry->status == '1' ? 'btn-success' : 'btn-warning';
-            $tooltip = $enquiry->status == '1' ? 'Click to change status to inactive' : 'Click to change status to active';
-
-            $strHtml = '<a href="javascript:void(0)"'
-                . ' data-toggle="tooltip"'
-                . ' data-placement="top"'
-                . ' title="' . $tooltip . '"'
-                . ' data-url="' . route('admin.enquiries.updateStatus') . '"'
-                . ' data-method="POST"'
-                . ' data-status="' . $dataStatus . '"'
-                . ' data-id="' . $enquiry->id . '"'
-                . ' class="btn ' . $btnClass . ' btn-sm update-status">' . $label . '</a>';
-
-            return response()->json(['success' => true, 'message' => 'Status updated to ' . $label, 'strHtml' => $strHtml]);
-        } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Failed to delete record.', 'error' => $e->getMessage()], 500);
-        }
     }
 }
