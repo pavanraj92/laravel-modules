@@ -11,5 +11,6 @@
     "UserRole": true,
     "AdminRolePermission": true,
     "Seo": true,
-    "Product": true
+    "Product": true,
+    "Enquiry": true
 }
