@@ -26,9 +26,11 @@ Route::prefix('admin')->name('admin.')->namespace('Auth')->group(function () {
 
 
     Route::middleware('admin.auth')->group(function () {
-        Route::get('dashboard', function () {           
-            return view('admin::admin.dashboard');
-        })->name('dashboard');
+        // Route::get('dashboard', function () {           
+        //     return view('admin::admin.dashboard');
+        // })->name('dashboard');
+
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
 
         Route::get('/profile', [AdminController::class, 'viewProfile'])->name('profile');
         Route::post('/profileUpdate', [AdminController::class, 'profileUpdate'])->name('profileUpdate');

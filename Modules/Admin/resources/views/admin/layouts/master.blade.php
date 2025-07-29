@@ -92,7 +92,7 @@
                 </div>
             </nav>
         </header>
-        
+
         <!-- Left Sidebar - style you can find in sidebar.scss  -->
         <aside class="left-sidebar d-flex flex-column" data-sidebarbg="skin5">
             <div class="scroll-sidebar flex-grow-1" style="overflow-y: auto;">
@@ -184,7 +184,7 @@
                                 <span class="hide-menu">Category Manager</span>
                             </a>
                         </li>
-                        @endadmincan                        
+                        @endadmincan
 
                         @admincan('pages_manager_list')
                         <li class="sidebar-item" {{ Route::is('admin.pages.*') ? 'selected' : '' }}>
@@ -231,6 +231,16 @@
                         </li>
                         @endadmincan
 
+                        @admincan('enquiry_manager_list')
+                        <li class="sidebar-item {{ Route::is('admin.enquiries.*') ? 'selected' : '' }}">
+                            <a class="sidebar-link waves-effect waves-dark {{ Route::is('admin.enquiries.*') ? 'active' : '' }}"
+                                href="{{ route('admin.enquiries.index') }}" aria-expanded="false">
+                                <i class="fas fa-phone"></i>
+                                <span class="hide-menu">Enquiry Manager</span>
+                            </a>
+                        </li>
+                        @endadmincan
+
                         @admincan('settings_manager_list')
                         <li class="sidebar-item {{ Route::is('admin.settings.*') ? 'selected' : '' }}">
                             <a class="sidebar-link waves-effect waves-dark {{ Route::is('admin.settings.*') ? 'active' : '' }}"
@@ -268,9 +278,9 @@
                                 <ol class="breadcrumb">
                                     <!-- check route name -->
                                     @if (!Route::is('admin.dashboard'))
-                                        <li class="breadcrumb-item">
-                                            <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-                                        </li>
+                                    <li class="breadcrumb-item">
+                                        <a href="{{ route('admin.dashboard') }}">Dashboard</a>
+                                    </li>
                                     @endif
                                     @yield('breadcrumb')
                                 </ol>

@@ -29,7 +29,7 @@ class MailDatabaseSeeder extends Seeder
 <p>Best regards,<br />
 The %APP_NAME% Team<br />
 %EMAIL_FOOTER%</p>
-',                    
+',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],
@@ -93,6 +93,14 @@ The %APP_NAME% Team<br />
 The %APP_NAME% Team<br />
 %EMAIL_FOOTER%</p>
 ',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ],
+                [
+                    'title' => 'Enquiry Email',
+                    'slug' => 'enquiry_email',
+                    'subject' => 'Enquiry Reply from %APP_NAME%!',
+                    'description' => '<p>Dear {{name}},</p><p>Thank you for reaching out to <strong>%APP_NAME%</strong> with your enquiry.</p><p><strong>Your Original Message:</strong></p><blockquote style="background: #f9f9f9; padding: 10px; border-left: 3px solid #ccc;">{!! message !!}</blockquote><p><strong>Admin\'s Reply:</strong></p><blockquote style="background: #f9f9f9; padding: 10px; border-left: 3px solid #ccc;">{{reply}}</blockquote><p>If you have any further questions or concerns, feel free to reply to this email.</p><p>If you did not create this account, please disregard this email.</p><p>Best regards,<br />The %APP_NAME% Team<br />%EMAIL_FOOTER%</p>',
                     'created_at' => now(),
                     'updated_at' => now(),
                 ],

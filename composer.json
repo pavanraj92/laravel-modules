@@ -38,7 +38,8 @@
             "Modules\\UserRole\\": "Modules/UserRole/app/",
             "Modules\\AdminRolePermission\\": "Modules/AdminRolePermission/app/",
             "Modules\\Seo\\": "Modules/Seo/app/",
-            "Modules\\Product\\": "Modules/Product/app/"
+            "Modules\\Product\\": "Modules/Product/app/",
+            "Modules\\Enquiry\\": "Modules/Enquiry/app/"
         }
     },
     "autoload-dev": {
